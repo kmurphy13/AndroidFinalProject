@@ -4,7 +4,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,7 +14,8 @@ public class MainActivity extends AppCompatActivity {
         // Kira was here to test git
     }
 
-    public void onFragmentInteraction(Uri uri){
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }
