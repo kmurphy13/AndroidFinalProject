@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".RegisterActivity">
 
     <fragment
-        android:name="com.example.remileblanc.qrc_cs450_finalproject.MainFragment"
+        android:name="com.example.remileblanc.qrc_cs450_finalproject.RegisterFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragment_main"
+        android:id="@+id/fragment_register"
         android:layout_gravity="center"
-        tools:layout="@layout/fragment_main"/>
+        tools:layout="@layout/fragment_register"/>
 
 </android.support.constraint.ConstraintLayout>

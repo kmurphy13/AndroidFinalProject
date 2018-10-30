@@ -3,44 +3,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    tools:context=".MainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="QRC App"
-        android:textSize="50sp"
         android:layout_gravity="center_horizontal"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:text="Welcome to the QRC App!"
+        android:textAlignment="center"
+        android:textSize="50sp" />
+
+    <EditText
+        android:id="@+id/enterEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:hint="Enter your email"
+        android:padding="10dp"
+        android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/enterPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="Enter your password"
+        android:padding="10dp"
+        android:textSize="30sp" />
+
     <Button
+        android:id="@+id/signInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Student"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:layout_gravity="center_horizontal"
-        android:padding="10dp"/>
-    <Button
+        android:layout_marginBottom="20dp"
+        android:padding="10dp"
+        android:text="Sign In"
+        android:textSize="30sp" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mentor"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_gravity="center_horizontal"
-        android:padding="10dp"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Professor"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_gravity="center_horizontal"
-        android:padding="10dp"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="24dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an acccount?"/>
+        <Button
+            android:id="@+id/createAccountButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create a new account"/>
+
+    </LinearLayout>
 
 </LinearLayout>

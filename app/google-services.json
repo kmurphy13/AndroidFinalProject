@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1085453815856",
+    "firebase_url": "https://qrccs450finalproject.firebaseio.com",
+    "project_id": "qrccs450finalproject",
+    "storage_bucket": "qrccs450finalproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085453815856:android:76c1315d39d04f7d",
+        "android_client_info": {
+          "package_name": "com.example.remileblanc.qrc_cs450_finalproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085453815856-bfs6n603eq8h403j0mj50skce8thhukl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.remileblanc.qrc_cs450_finalproject",
+            "certificate_hash": "b78fb7b39de76bbce8dc6fddac1aa2e26c385400"
+          }
+        },
+        {
+          "client_id": "1085453815856-9or2derdl86ol46nhnpj4ojakbdsbsn3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI-8p1LdVoyEYoyx71kcR1tF1R0AesErs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085453815856-9or2derdl86ol46nhnpj4ojakbdsbsn3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
