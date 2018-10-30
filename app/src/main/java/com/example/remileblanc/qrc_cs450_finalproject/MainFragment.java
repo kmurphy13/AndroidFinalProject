@@ -2,6 +2,10 @@ package com.example.remileblanc.qrc_cs450_finalproject;
 
 import android.content.Context;
 import android.content.Intent;
+<<<<<<< HEAD
+=======
+import android.content.SharedPreferences;
+>>>>>>> fe0c69e6d7a6406b7553dbe244fc0c0b52ee71eb
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -59,6 +63,7 @@ public class MainFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
 
+<<<<<<< HEAD
         createAccountButton = rootView.findViewById(R.id.createAccountButton);
 
         createAccountButton.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +78,32 @@ public class MainFragment extends Fragment {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
+=======
+        View signInButton = rootView.findViewById(R.id.sign_in_button);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int userType = user.getUserType();
+                switch(userType){
+                    case 0:
+                        Intent intent0 = new Intent(getActivity(), StudentActivity.class);
+                        getActivity().startActivity(intent0);
+                        break;
+                    case 1:
+                        Intent intent1 = new Intent(getActivity(), MentorActivity.class);
+                        getActivity().startActivity(intent1);
+                        break;
+                    case 2:
+                        Intent intent2 = new Intent(getActivity(), ProfessorActivity.class);
+                        getActivity().startActivity(intent2);
+                        break;
+                }
+
+
+            }
+        });
+>>>>>>> fe0c69e6d7a6406b7553dbe244fc0c0b52ee71eb
 
         return rootView;
     }
