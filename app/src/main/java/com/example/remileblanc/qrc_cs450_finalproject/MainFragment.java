@@ -1,6 +1,8 @@
 package com.example.remileblanc.qrc_cs450_finalproject;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,6 +41,31 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+
+        View signInButton = rootView.findViewById(R.id.sign_in_button);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int userType = user.getUserType();
+                switch(userType){
+                    case 0:
+                        Intent intent0 = new Intent(getActivity(), StudentActivity.class);
+                        getActivity().startActivity(intent0);
+                        break;
+                    case 1:
+                        Intent intent1 = new Intent(getActivity(), MentorActivity.class);
+                        getActivity().startActivity(intent1);
+                        break;
+                    case 2:
+                        Intent intent2 = new Intent(getActivity(), ProfessorActivity.class);
+                        getActivity().startActivity(intent2);
+                        break;
+                }
+
+
+            }
+        });
 
         return rootView;
     }
