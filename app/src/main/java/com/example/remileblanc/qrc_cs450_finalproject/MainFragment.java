@@ -3,6 +3,10 @@ package com.example.remileblanc.qrc_cs450_finalproject;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+<<<<<<< HEAD
+
+=======
+>>>>>>> 5f3fb256d557253d93cf5e6e6f51075cb237c040
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -66,7 +70,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),RegisterActivity.class);
-                getActivity().startActivity(intent);
+                startActivity(intent);
             }
         });
 
@@ -75,12 +79,21 @@ public class MainFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
 
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 5f3fb256d557253d93cf5e6e6f51075cb237c040
         View signInButton = rootView.findViewById(R.id.signInButton);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+<<<<<<< HEAD
+                int userType = 0;
+=======
                 int userType = 0;//user.getUserType();
+>>>>>>> 5f3fb256d557253d93cf5e6e6f51075cb237c040
                 switch(userType){
                     case 0:
                         Intent intent0 = new Intent(getActivity(), StudentActivity.class);
@@ -99,6 +112,10 @@ public class MainFragment extends Fragment {
 
             }
         });
+<<<<<<< HEAD
+
+=======
+>>>>>>> 5f3fb256d557253d93cf5e6e6f51075cb237c040
 
         return rootView;
     }
@@ -127,47 +144,18 @@ public class MainFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         void onFragmentInteraction(Uri uri);
     }
-    /*
-    public void createAccount(String email, String password){
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
-    }
+
 
 
     public void signIn(String email, String password){
 
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -178,13 +166,16 @@ public class MainFragment extends Fragment {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                            Toast.makeText(getContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                     }
                 });
+    }
+
+    public void updateUI(FirebaseUser user){
 
     }
-    */
+
 }
