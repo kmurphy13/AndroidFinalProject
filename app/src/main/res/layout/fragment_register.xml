@@ -16,37 +16,35 @@
         android:layout_marginBottom="15dp"/>
 
     <EditText
+        android:id="@+id/newFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="First Name"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"/>
     <EditText
+        android:id="@+id/newLastName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Last Name"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"/>
-    <!--<EditText-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:hint="Student, Mentor, or Professor?"-->
-        <!--android:layout_marginLeft="20dp"-->
-        <!--android:layout_marginRight="20dp"/>-->
-
 
     <EditText
+        android:id="@+id/newEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"/>
     <EditText
+        android:id="@+id/newPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:inputType="textPassword"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,31 +52,35 @@
         android:orientation="horizontal">
 
         <CheckBox android:id="@+id/checkbox_student"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Student"
+            android:layout_weight="1"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
-        <!--android:onClick="onCheckboxClicked"/>-->
+            android:layout_marginRight="20dp"
+            android:onClick="onCheckboxClicked"/>
 
         <CheckBox android:id="@+id/checkbox_mentor"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Mentor"
+            android:layout_weight="1"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
-        <!--android:onClick="onCheckboxClicked"/>-->
+            android:layout_marginRight="20dp"
+            android:onClick="onCheckboxClicked"/>
 
         <CheckBox android:id="@+id/checkbox_professor"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Professor"
+            android:layout_weight="1"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
-        <!--android:onClick="onCheckboxClicked"/>-->
+            android:layout_marginRight="20dp"
+            android:onClick="onCheckboxClicked"/>
     </LinearLayout>
 
     <Button
+        android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
