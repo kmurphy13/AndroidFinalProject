@@ -77,6 +77,10 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:onClick="onCheckboxClicked"/>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 055207b360c3990a403a0c4aea43735eb6f494d3
     </LinearLayout>
 
     <Button

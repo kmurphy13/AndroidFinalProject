@@ -107,6 +107,7 @@ public class RegisterFragment extends Fragment {
         }
     }
 
+<<<<<<< HEAD
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
@@ -145,6 +146,8 @@ public class RegisterFragment extends Fragment {
 
         }
     }
+=======
+>>>>>>> 055207b360c3990a403a0c4aea43735eb6f494d3
 
     @Override
     public void onAttach(Context context) {
