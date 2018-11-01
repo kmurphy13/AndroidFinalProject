@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "1085453815856-sculi7dnom0ng8lsvq9l3sirhm0am3el.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.remileblanc.qrc_cs450_finalproject",
+            "certificate_hash": "918347bb4d13dfb0570b102db8a287f45105cfdd"
+          }
+        },
+        {
           "client_id": "1085453815856-9or2derdl86ol46nhnpj4ojakbdsbsn3.apps.googleusercontent.com",
           "client_type": 3
         }

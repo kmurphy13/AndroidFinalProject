@@ -1,9 +1,10 @@
 package com.example.remileblanc.qrc_cs450_finalproject;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class StudentActivity extends AppCompatActivity{
+public class StudentActivity extends AppCompatActivity implements StudentFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,4 +15,8 @@ public class StudentActivity extends AppCompatActivity{
     }
 
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
