@@ -9,7 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.widget.Toast;
+=======
+import android.widget.CheckBox;
+>>>>>>> 5f3fb256d557253d93cf5e6e6f51075cb237c040
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,17 +53,53 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
         // Inflate the layout for this fragment
+<<<<<<< HEAD
         View rootView = inflater.inflate(R.layout.fragment_register, container, false);
 
 
         return rootView;
+=======
+        return inflater.inflate(R.layout.fragment_register, container, false);
+
+
+>>>>>>> 5f3fb256d557253d93cf5e6e6f51075cb237c040
     }
 
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkbox_student:
+                if (checked)
+                    // Put some meat on the sandwich
+                else
+                    // Remove the meat
+                break;
+            case R.id.checkbox_mentor:
+                if (checked)
+                    // Cheese me
+                else
+                    // I'm lactose intolerant
+                    break;
+            case R.id.checkbox_professor:
+                if (checked)
+                    //prof
+                else
+                    break;
+            // TODO: Veggie sandwich
         }
     }
 

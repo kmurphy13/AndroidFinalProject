@@ -3,7 +3,10 @@ package com.example.remileblanc.qrc_cs450_finalproject;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5f3fb256d557253d93cf5e6e6f51075cb237c040
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -76,14 +79,21 @@ public class MainFragment extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5f3fb256d557253d93cf5e6e6f51075cb237c040
         View signInButton = rootView.findViewById(R.id.signInButton);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+<<<<<<< HEAD
                 int userType = 0;
+=======
+                int userType = 0;//user.getUserType();
+>>>>>>> 5f3fb256d557253d93cf5e6e6f51075cb237c040
                 switch(userType){
                     case 0:
                         Intent intent0 = new Intent(getActivity(), StudentActivity.class);
@@ -102,7 +112,10 @@ public class MainFragment extends Fragment {
 
             }
         });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5f3fb256d557253d93cf5e6e6f51075cb237c040
 
         return rootView;
     }
