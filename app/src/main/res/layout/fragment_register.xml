@@ -59,24 +59,25 @@
             android:layout_height="wrap_content"
             android:text="Student"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
-        <!--android:onClick="onCheckboxClicked"/>-->
+            android:layout_marginRight="20dp"
+            android:onClick="onCheckboxClicked"/>
 
         <CheckBox android:id="@+id/checkbox_mentor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mentor"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
-        <!--android:onClick="onCheckboxClicked"/>-->
+            android:layout_marginRight="20dp"
+            android:onClick="onCheckboxClicked"/>
 
         <CheckBox android:id="@+id/checkbox_professor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Professor"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
-        <!--android:onClick="onCheckboxClicked"/>-->
+            android:layout_marginRight="20dp"
+            android:onClick="onCheckboxClicked"/>
+
     </LinearLayout>
 
     <Button
