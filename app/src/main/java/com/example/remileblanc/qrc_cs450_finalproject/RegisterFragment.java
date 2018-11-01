@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 =======
 import android.widget.CheckBox;
->>>>>>> 5f3fb256d557253d93cf5e6e6f51075cb237c040
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -54,19 +53,12 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-
         // Inflate the layout for this fragment
-<<<<<<< HEAD
         View rootView = inflater.inflate(R.layout.fragment_register, container, false);
 
 
         return rootView;
-=======
-        return inflater.inflate(R.layout.fragment_register, container, false);
 
-
->>>>>>> 5f3fb256d557253d93cf5e6e6f51075cb237c040
     }
 
 
