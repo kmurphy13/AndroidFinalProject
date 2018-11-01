@@ -9,10 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-<<<<<<< HEAD
+
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
-=======
+
 import android.widget.CheckBox;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 72d9a6a4946032d4c8f2efd7851c32043f8c03fe
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +34,19 @@ public class RegisterFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private FirebaseAuth mAuth;
+
+    private Button registerButton;
+
+    private EditText newFirstName;
+    private EditText newLastName;
+    private EditText newEmail;
+    private EditText newPassword;
+
+    private String email;
+    private String password;
+    private String firstName;
+    private String lastName;
+
 
 
     public RegisterFragment() {
@@ -53,10 +72,41 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+<<<<<<< HEAD
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_register, container, false);
+=======
+        final View rootView = inflater.inflate(R.layout.fragment_register, container, false);
 
 
+>>>>>>> 72d9a6a4946032d4c8f2efd7851c32043f8c03fe
+
+        registerButton = rootView.findViewById(R.id.registerButton);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newFirstName = rootView.findViewById(R.id.newFirstName);
+                firstName = newFirstName.getText().toString();
+
+<<<<<<< HEAD
+=======
+                newLastName = rootView.findViewById(R.id.newLastName);
+                lastName = newLastName.getText().toString();
+
+                newEmail = rootView.findViewById(R.id.newEmail);
+                email = newEmail.getText().toString();
+                System.out.println(email);
+
+                newPassword = rootView.findViewById(R.id.newPassword);
+                password = newPassword.getText().toString();
+                System.out.println(password);
+
+                createAccount(email,password);
+
+            }
+        });
+
+>>>>>>> 72d9a6a4946032d4c8f2efd7851c32043f8c03fe
         return rootView;
 
     }
@@ -68,6 +118,47 @@ public class RegisterFragment extends Fragment {
         }
     }
 
+<<<<<<< HEAD
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkbox_student:
+                if (checked){
+
+                }
+                    // Put some meat on the sandwich
+                else{
+
+                }
+                    // Remove the meat
+                break;
+            case R.id.checkbox_mentor:
+                if (checked){
+
+                }
+                    // Cheese me
+                else{
+
+                }
+                    // I'm lactose intolerant
+                break;
+            case R.id.checkbox_professor:
+                if (checked){
+
+                }
+                    //prof
+                else{
+
+                }
+                break;
+
+        }
+    }
+=======
+>>>>>>> 055207b360c3990a403a0c4aea43735eb6f494d3
 
     @Override
     public void onAttach(Context context) {
@@ -114,14 +205,15 @@ public class RegisterFragment extends Fragment {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
-                    updateUI(null);
+                    Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_LONG).show();
+
                 }
             }
         });
     }
 
     public void updateUI(FirebaseUser user) {
+        Toast.makeText(getContext(), "Hello "+user.getEmail(), Toast.LENGTH_LONG).show();
 
 
     }
