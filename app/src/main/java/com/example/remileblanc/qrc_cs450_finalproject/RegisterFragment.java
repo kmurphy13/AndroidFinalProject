@@ -1,6 +1,7 @@
 package com.example.remileblanc.qrc_cs450_finalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static android.content.ContentValues.TAG;
 
@@ -31,6 +34,7 @@ public class RegisterFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     private Button registerButton;
 
@@ -43,7 +47,7 @@ public class RegisterFragment extends Fragment {
     private String password;
     private String firstName;
     private String lastName;
-
+    private String userType;
 
 
     public RegisterFragment() {
@@ -62,6 +66,7 @@ public class RegisterFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
     }
 
@@ -71,10 +76,14 @@ public class RegisterFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.fragment_register, container, false);
 
+        final CheckBox student = rootView.findViewById(R.id.checkbox_student);
+        final CheckBox mentor = rootView.findViewById(R.id.checkbox_mentor);
+        final CheckBox professor = rootView.findViewById(R.id.checkbox_professor);
 
 
         registerButton = rootView.findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 newFirstName = rootView.findViewById(R.id.newFirstName);
@@ -85,18 +94,23 @@ public class RegisterFragment extends Fragment {
 
                 newEmail = rootView.findViewById(R.id.newEmail);
                 email = newEmail.getText().toString();
-                System.out.println(email);
 
                 newPassword = rootView.findViewById(R.id.newPassword);
                 password = newPassword.getText().toString();
-                System.out.println(password);
 
-                createAccount(email,password);
+                createAccount(email, password);
 
             }
         });
 
         return rootView;
+
+    }
+
+    public void writeNewUser(String aUserID, String aFirstName, String aLastName, String aEmail, String aUserType) {
+        User user = new User(aEmail, aFirstName, aLastName, aUserType);
+        mDatabase.child("users").child(aUserID).setValue(user);
+
 
     }
 
@@ -107,47 +121,44 @@ public class RegisterFragment extends Fragment {
         }
     }
 
-<<<<<<< HEAD
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
 
         // Check which checkbox was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.checkbox_student:
-                if (checked){
+                if (checked) {
 
                 }
-                    // Put some meat on the sandwich
-                else{
+                // Put some meat on the sandwich
+                else {
 
                 }
-                    // Remove the meat
+                // Remove the meat
                 break;
             case R.id.checkbox_mentor:
-                if (checked){
+                if (checked) {
 
                 }
-                    // Cheese me
-                else{
+                // Cheese me
+                else {
 
                 }
-                    // I'm lactose intolerant
+                // I'm lactose intolerant
                 break;
             case R.id.checkbox_professor:
-                if (checked){
+                if (checked) {
 
                 }
-                    //prof
-                else{
+                //prof
+                else {
 
                 }
                 break;
 
         }
     }
-=======
->>>>>>> 055207b360c3990a403a0c4aea43735eb6f494d3
 
     @Override
     public void onAttach(Context context) {
@@ -181,28 +192,44 @@ public class RegisterFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void createAccount(String email, String password) {
+    public void createAccount(String aEmail, String aPassword) {
 
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(aEmail, aPassword).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
+                    userType = ((RegisterActivity) getActivity()).getUserType();
+                    writeNewUser(user.getUid(), firstName, lastName, email, userType);
                     updateUI(user);
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
                     Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_LONG).show();
-
                 }
             }
         });
     }
 
     public void updateUI(FirebaseUser user) {
-        Toast.makeText(getContext(), "Hello "+user.getEmail(), Toast.LENGTH_LONG).show();
+
+
+        switch (userType) {
+            case "Student":
+                Intent intent0 = new Intent(getActivity(), StudentActivity.class);
+                getActivity().startActivity(intent0);
+                break;
+            case "Mentor":
+                Intent intent1 = new Intent(getActivity(), MentorActivity.class);
+                getActivity().startActivity(intent1);
+                break;
+            case "Professor":
+                Intent intent2 = new Intent(getActivity(), ProfessorActivity.class);
+                getActivity().startActivity(intent2);
+                break;
+        }
 
 
     }

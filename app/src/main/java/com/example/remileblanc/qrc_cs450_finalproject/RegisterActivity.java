@@ -8,6 +8,9 @@ import android.widget.CheckBox;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterFragment.OnFragmentInteractionListener {
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,11 +24,12 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
 
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
 
         CheckBox student = findViewById(R.id.checkbox_student);
         CheckBox mentor = findViewById(R.id.checkbox_mentor);
         CheckBox professor = findViewById(R.id.checkbox_professor);
+
+        boolean checked = ((CheckBox) view).isChecked();
 
         // Check which checkbox was clicked
         switch(view.getId()) {
@@ -62,5 +66,20 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
                 break;
             // TODO: Veggie sandwich
         }
+    }
+
+    public String getUserType(){
+        CheckBox student = findViewById(R.id.checkbox_student);
+        CheckBox mentor = findViewById(R.id.checkbox_mentor);
+        CheckBox professor = findViewById(R.id.checkbox_professor);
+
+        if(student.isChecked()){
+            return "Student";
+        }else if(professor.isChecked()){
+            return "Professor";
+        }else if(mentor.isChecked()){
+            return "Mentor";
+        }
+        return null;
     }
 }

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +22,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static android.content.ContentValues.TAG;
 
@@ -36,10 +43,19 @@ public class MainFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
 
     // Buttons
     private Button signInButton;
     private Button createAccountButton;
+    private EditText enterEmail;
+    private EditText enterPassword;
+
+    private String stringEmail;
+    private String stringPassword;
+    private String stringUserType;
+
 
     public MainFragment() {
         // Required empty public constructor
@@ -51,6 +67,8 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
 
     }
 
@@ -58,7 +76,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
 
         createAccountButton = rootView.findViewById(R.id.createAccountButton);
@@ -66,39 +84,34 @@ public class MainFragment extends Fragment {
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),RegisterActivity.class);
+                Intent intent = new Intent(getActivity(), RegisterActivity.class);
                 startActivity(intent);
             }
         });
 
 
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //FirebaseUser currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
 
 
         View signInButton = rootView.findViewById(R.id.signInButton);
+
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                enterEmail = rootView.findViewById(R.id.enterEmail);
+                stringEmail = enterEmail.getText().toString();
+                System.out.println(stringEmail);
 
-                int userType = 0;
+                enterPassword = rootView.findViewById(R.id.enterPassword);
+                stringPassword = enterPassword.getText().toString();
+                System.out.println(stringPassword);
 
-                switch(userType){
-                    case 0:
-                        Intent intent0 = new Intent(getActivity(), StudentActivity.class);
-                        getActivity().startActivity(intent0);
-                        break;
-                    case 1:
-                        Intent intent1 = new Intent(getActivity(), MentorActivity.class);
-                        getActivity().startActivity(intent1);
-                        break;
-                    case 2:
-                        Intent intent2 = new Intent(getActivity(), ProfessorActivity.class);
-                        getActivity().startActivity(intent2);
-                        break;
-                }
+                signIn(stringEmail, stringPassword);
+
+
 
 
             }
@@ -139,8 +152,7 @@ public class MainFragment extends Fragment {
     }
 
 
-
-    public void signIn(String email, String password){
+    public void signIn(String email, String password) {
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -162,8 +174,51 @@ public class MainFragment extends Fragment {
                 });
     }
 
-    public void updateUI(FirebaseUser user){
-        Toast.makeText(getContext(), "Hello "+user.getEmail(), Toast.LENGTH_LONG).show();
+    public void updateUI(final FirebaseUser aUser) {
+
+        DatabaseReference users = database.getReference("users");
+
+
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> userIDs = dataSnapshot.getChildren();
+                for(DataSnapshot userID : userIDs){
+                    if(userID.equals(aUser.getUid())){
+                        Iterable<DataSnapshot> userInfo = dataSnapshot.getChildren();
+                        for(DataSnapshot info : userInfo){
+                            stringUserType = info.child("userType").toString();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        System.out.println(stringUserType);
+
+        switch (stringUserType) {
+            case "Student":
+                Intent intent0 = new Intent(getActivity(), StudentActivity.class);
+                getActivity().startActivity(intent0);
+                break;
+            case "Mentor":
+                Intent intent1 = new Intent(getActivity(), MentorActivity.class);
+                getActivity().startActivity(intent1);
+                break;
+            case "Professor":
+                Intent intent2 = new Intent(getActivity(), ProfessorActivity.class);
+                getActivity().startActivity(intent2);
+                break;
+        }
+
+        Toast.makeText(getContext(), "Hello " + aUser.getEmail(), Toast.LENGTH_LONG).show();
     }
 
 }
