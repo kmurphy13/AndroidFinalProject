@@ -22,11 +22,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -55,6 +60,8 @@ public class MainFragment extends Fragment {
     private String stringEmail;
     private String stringPassword;
     private String stringUserType;
+
+    private FirebaseUser user;
 
 
     public MainFragment() {
@@ -103,19 +110,41 @@ public class MainFragment extends Fragment {
 
                 enterEmail = rootView.findViewById(R.id.enterEmail);
                 stringEmail = enterEmail.getText().toString();
-                System.out.println(stringEmail);
+
 
                 enterPassword = rootView.findViewById(R.id.enterPassword);
                 stringPassword = enterPassword.getText().toString();
-                System.out.println(stringPassword);
 
-                signIn(stringEmail, stringPassword);
 
+                DatabaseReference users = database.getReference("users");
+                users.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        signIn(stringEmail, stringPassword);
+                        FirebaseUser aUser = mAuth.getCurrentUser();
+                        System.out.println(aUser);
+                        for(DataSnapshot ds : dataSnapshot.getChildren()){
+                            if(ds.getKey().equals(aUser.getUid())){
+                                stringUserType = ds.child("userType").getValue(String.class);
+                                updateUI(aUser);
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
 
 
             }
         });
+
+
 
 
         return rootView;
@@ -161,47 +190,19 @@ public class MainFragment extends Fragment {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(getContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
                         }
                     }
                 });
+
     }
 
-    public void updateUI(final FirebaseUser aUser) {
+    public void updateUI(FirebaseUser aUser) {
 
-        DatabaseReference users = database.getReference("users");
-
-
-        users.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> userIDs = dataSnapshot.getChildren();
-                for(DataSnapshot userID : userIDs){
-                    if(userID.equals(aUser.getUid())){
-                        Iterable<DataSnapshot> userInfo = dataSnapshot.getChildren();
-                        for(DataSnapshot info : userInfo){
-                            stringUserType = info.child("userType").toString();
-                        }
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        System.out.println(stringUserType);
 
         switch (stringUserType) {
             case "Student":
@@ -219,6 +220,8 @@ public class MainFragment extends Fragment {
         }
 
         Toast.makeText(getContext(), "Hello " + aUser.getEmail(), Toast.LENGTH_LONG).show();
+
     }
+
 
 }

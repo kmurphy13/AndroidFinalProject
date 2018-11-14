@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <EditText
+
+    <TextView
+        android:id="@+id/HelloStudent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello Student!"/>
+        android:layout_height="wrap_content"
+        android:text="Hello Student!"
+        android:gravity="center"
+        android:textSize="20sp"/>
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/ScheduleASessionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Schedule a Tutoring session"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/CheckInToQRCButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check in to QRC"
+        android:textSize="20sp"/>
+    <Button
+        android:id="@+id/WriteEvaluationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Write an Evaluation"
+        android:textSize="20sp"/>
+    <Button
+        android:id="@+id/StudyCornerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Study Corner"/>
+
+
+</LinearLayout>

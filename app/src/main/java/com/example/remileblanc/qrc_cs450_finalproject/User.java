@@ -7,13 +7,15 @@ public class User {
     public String firstName;
     public String lastName;
     public String userType;
+    public String userID;
 
     public User(){
 
     }
 
-    public User(String aEmail, String aFirstName, String aLastName, String aUserType){
+    public User(String aUserID, String aEmail, String aFirstName, String aLastName, String aUserType){
 
+        this.userID = aUserID;
         this.email = aEmail;
         this.firstName = aFirstName;
         this.lastName = aLastName;

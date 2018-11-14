@@ -16,10 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import android.widget.CheckBox;
-<<<<<<< HEAD
-=======
 
->>>>>>> 72d9a6a4946032d4c8f2efd7851c32043f8c03fe
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -77,17 +74,12 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-<<<<<<< HEAD
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_register, container, false);
-=======
         final View rootView = inflater.inflate(R.layout.fragment_register, container, false);
 
         final CheckBox student = rootView.findViewById(R.id.checkbox_student);
         final CheckBox mentor = rootView.findViewById(R.id.checkbox_mentor);
         final CheckBox professor = rootView.findViewById(R.id.checkbox_professor);
 
->>>>>>> 72d9a6a4946032d4c8f2efd7851c32043f8c03fe
 
         registerButton = rootView.findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -96,9 +88,6 @@ public class RegisterFragment extends Fragment {
             public void onClick(View view) {
                 newFirstName = rootView.findViewById(R.id.newFirstName);
                 firstName = newFirstName.getText().toString();
-
-<<<<<<< HEAD
-=======
                 newLastName = rootView.findViewById(R.id.newLastName);
                 lastName = newLastName.getText().toString();
 
@@ -113,15 +102,14 @@ public class RegisterFragment extends Fragment {
             }
         });
 
->>>>>>> 72d9a6a4946032d4c8f2efd7851c32043f8c03fe
+
         return rootView;
 
     }
 
     public void writeNewUser(String aUserID, String aFirstName, String aLastName, String aEmail, String aUserType) {
-        User user = new User(aEmail, aFirstName, aLastName, aUserType);
+        User user = new User(aUserID,aEmail, aFirstName, aLastName, aUserType);
         mDatabase.child("users").child(aUserID).setValue(user);
-
 
     }
 
@@ -241,7 +229,6 @@ public class RegisterFragment extends Fragment {
                 getActivity().startActivity(intent2);
                 break;
         }
-
 
     }
 }
