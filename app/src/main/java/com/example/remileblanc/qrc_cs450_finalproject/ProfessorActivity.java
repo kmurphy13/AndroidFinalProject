@@ -17,4 +17,9 @@ public class ProfessorActivity extends AppCompatActivity implements ProfessorFra
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

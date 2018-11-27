@@ -61,7 +61,7 @@ public class MainFragment extends Fragment {
     private String stringPassword;
     private String stringUserType;
 
-    private FirebaseUser user;
+    private FirebaseUser aUser;
 
 
     public MainFragment() {
@@ -114,33 +114,7 @@ public class MainFragment extends Fragment {
 
                 enterPassword = rootView.findViewById(R.id.enterPassword);
                 stringPassword = enterPassword.getText().toString();
-
-
-                DatabaseReference users = database.getReference("users");
-                users.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        signIn(stringEmail, stringPassword);
-                        FirebaseUser aUser = mAuth.getCurrentUser();
-                        System.out.println(aUser);
-                        for(DataSnapshot ds : dataSnapshot.getChildren()){
-                            if(ds.getKey().equals(aUser.getUid())){
-                                stringUserType = ds.child("userType").getValue(String.class);
-                                updateUI(aUser);
-                            }
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-
+                signIn(stringEmail, stringPassword);
             }
         });
 
@@ -180,7 +154,6 @@ public class MainFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-
     public void signIn(String email, String password) {
 
         mAuth.signInWithEmailAndPassword(email, password)
@@ -189,9 +162,13 @@ public class MainFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            aUser = mAuth.getCurrentUser();
+                            System.out.println(aUser);
                             Log.d(TAG, "signInWithEmail:success");
+                            updateUI(aUser);
                         } else {
                             // If sign in fails, display a message to the user.
+                            aUser=null;
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(getContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -201,10 +178,28 @@ public class MainFragment extends Fragment {
 
     }
 
-    public void updateUI(FirebaseUser aUser) {
+    public void updateUI(final FirebaseUser specificUser) {
 
+        DatabaseReference users = database.getReference("users");
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    if(ds.getKey().equals(specificUser.getUid())){
+                        stringUserType = ds.child("userType").getValue(String.class);
+                        openUserFragment(stringUserType);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        switch (stringUserType) {
+            }
+        });
+    }
+
+    public void openUserFragment(String userType){
+        switch (userType) {
             case "Student":
                 Intent intent0 = new Intent(getActivity(), StudentActivity.class);
                 getActivity().startActivity(intent0);
@@ -218,10 +213,13 @@ public class MainFragment extends Fragment {
                 getActivity().startActivity(intent2);
                 break;
         }
-
         Toast.makeText(getContext(), "Hello " + aUser.getEmail(), Toast.LENGTH_LONG).show();
-
     }
 
-
+    @Override
+    public void onDestroy() {
+        aUser = null;
+        stringUserType = null;
+        super.onDestroy();
+    }
 }

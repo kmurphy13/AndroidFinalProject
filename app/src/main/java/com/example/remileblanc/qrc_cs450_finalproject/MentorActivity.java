@@ -19,4 +19,9 @@ public class MentorActivity extends AppCompatActivity implements MentorFragment.
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

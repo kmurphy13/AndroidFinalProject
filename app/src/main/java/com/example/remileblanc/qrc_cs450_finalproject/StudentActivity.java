@@ -19,4 +19,10 @@ public class StudentActivity extends AppCompatActivity implements StudentFragmen
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }
