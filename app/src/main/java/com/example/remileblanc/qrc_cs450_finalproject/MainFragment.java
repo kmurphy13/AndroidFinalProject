@@ -96,12 +96,6 @@ public class MainFragment extends Fragment {
             }
         });
 
-
-        // Check if user is signed in (non-null) and update UI accordingly.
-        //FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
-
-
         View signInButton = rootView.findViewById(R.id.signInButton);
 
         signInButton.setOnClickListener(new View.OnClickListener() {

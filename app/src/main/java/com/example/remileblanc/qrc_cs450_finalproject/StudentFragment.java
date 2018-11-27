@@ -57,7 +57,8 @@ public class StudentFragment extends Fragment {
         b_checkIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getActivity(), CheckInActivity.class);
+                startActivity(intent);
             }
         });
 
