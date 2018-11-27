@@ -16,11 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MentorActivity" />
         <activity android:name=".StudentActivity" />
         <activity android:name=".ScheduleSessionActivity" />
         <activity android:name=".StudyCornerActivity"></activity>
+=======
+        <activity android:name=".CheckInActivity"/>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".MentorActivity" />
+        <activity android:name=".StudentActivity" />
+>>>>>>> f15fa5bf88951fe6bee59ab77b25ad3e46aaafe5
     </application>
 
 </manifest>
