@@ -214,7 +214,6 @@ public class RegisterFragment extends Fragment {
 
     public void updateUI(FirebaseUser user) {
 
-
         switch (userType) {
             case "Student":
                 Intent intent0 = new Intent(getActivity(), StudentActivity.class);

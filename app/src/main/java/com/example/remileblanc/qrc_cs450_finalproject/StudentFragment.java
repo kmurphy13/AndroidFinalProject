@@ -51,7 +51,6 @@ public class StudentFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-
             }
         });
 
@@ -66,7 +65,7 @@ public class StudentFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.stlawu.edu/pqrc/form/evaluation"));
                 startActivity(browserIntent);
 
             }
