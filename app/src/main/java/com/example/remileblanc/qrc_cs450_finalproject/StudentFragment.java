@@ -50,7 +50,8 @@ public class StudentFragment extends Fragment {
         b_scheduleSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getActivity(), ScheduleSessionActivity.class);
+                getActivity().startActivity(intent);
             }
         });
 
@@ -74,7 +75,8 @@ public class StudentFragment extends Fragment {
         b_studyCorner.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getActivity(), StudyCornerActivity.class);
+                getActivity().startActivity(intent);
             }
         });
 
