@@ -110,6 +110,7 @@ public class RegisterFragment extends Fragment {
     public void writeNewUser(String aUserID, String aFirstName, String aLastName, String aEmail, String aUserType) {
         User user = new User(aUserID,aEmail, aFirstName, aLastName, aUserType);
         mDatabase.child("users").child(aUserID).setValue(user);
+
     }
 
 
@@ -118,6 +119,7 @@ public class RegisterFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
 
 
     @Override
@@ -159,6 +161,7 @@ public class RegisterFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "createUserWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
                     userType = ((RegisterActivity) getActivity()).getUserType();
                     writeNewUser(user.getUid(), firstName, lastName, email, userType);
@@ -166,7 +169,7 @@ public class RegisterFragment extends Fragment {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(getContext(), "Cannot create new account.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Cannont create new account.", Toast.LENGTH_LONG).show();
                 }
             }
         });
