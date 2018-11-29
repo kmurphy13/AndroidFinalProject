@@ -110,7 +110,6 @@ public class RegisterFragment extends Fragment {
     public void writeNewUser(String aUserID, String aFirstName, String aLastName, String aEmail, String aUserType) {
         User user = new User(aUserID,aEmail, aFirstName, aLastName, aUserType);
         mDatabase.child("users").child(aUserID).setValue(user);
-
     }
 
 
@@ -120,44 +119,6 @@ public class RegisterFragment extends Fragment {
         }
     }
 
-    public void onCheckboxClicked(View view) {
-        // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
-
-        // Check which checkbox was clicked
-        switch (view.getId()) {
-            case R.id.checkbox_student:
-                if (checked) {
-
-                }
-                // Put some meat on the sandwich
-                else {
-
-                }
-                // Remove the meat
-                break;
-            case R.id.checkbox_mentor:
-                if (checked) {
-
-                }
-                // Cheese me
-                else {
-
-                }
-                // I'm lactose intolerant
-                break;
-            case R.id.checkbox_professor:
-                if (checked) {
-
-                }
-                //prof
-                else {
-
-                }
-                break;
-
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -198,7 +159,6 @@ public class RegisterFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
                     userType = ((RegisterActivity) getActivity()).getUserType();
                     writeNewUser(user.getUid(), firstName, lastName, email, userType);
@@ -206,7 +166,7 @@ public class RegisterFragment extends Fragment {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Cannot create new account.", Toast.LENGTH_LONG).show();
                 }
             }
         });

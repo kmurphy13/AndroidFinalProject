@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".MainFragment">
+    tools:context=".MainFragment"
+>
 
 
     <TextView
@@ -15,7 +16,9 @@
         android:padding="10dp"
         android:text="Welcome to the QRC App!"
         android:textAlignment="center"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        android:fontFamily="@font/latolight"
+        />
 
     <EditText
         android:id="@+id/enterEmail"
@@ -28,7 +31,8 @@
         android:layout_marginTop="20dp"
         android:hint="Enter your email"
         android:padding="10dp"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:fontFamily="@font/latolight"/>
 
     <EditText
         android:id="@+id/enterPassword"
@@ -41,7 +45,8 @@
         android:hint="Enter your password"
         android:inputType="textPassword"
         android:padding="10dp"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:fontFamily="@font/latolight"/>
 
     <Button
         android:id="@+id/signInButton"
@@ -51,7 +56,9 @@
         android:layout_marginBottom="20dp"
         android:padding="10dp"
         android:text="Sign In"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:background="@color/colorPrimaryDark"
+        android:fontFamily="@font/latolight"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -62,12 +69,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Don't have an acccount?"/>
+            android:text="Don't have an acccount?"
+            android:fontFamily="@font/latolight"
+            android:textSize="16sp"/>
         <Button
             android:id="@+id/createAccountButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create a new account"/>
+            android:text="Create a new account"
+            android:background="@color/colorPrimaryDark"
+            android:fontFamily="@font/latolight"/>
 
     </LinearLayout>
 

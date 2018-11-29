@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 
 /**
@@ -64,7 +66,40 @@ public class CheckInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_check_in, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_check_in, container, false);
+
+        //Get Spinners
+        Spinner classSpinner = rootView.findViewById(R.id.classSpinner);
+        Spinner professorSpinner = rootView.findViewById(R.id.professorSpinner);
+
+        //create a list of items for the spinner.
+        String[] professors = new String[]{"Maegan Bos", "Jessica Chapman","Dan Cryster","Jim Defranza","Dante Giarusso","Robert Haney","Ed Harcourt",
+                                        "Natasha Komarov","Choong-Soo Lee","Patti Frazer Lock","Robin Lock","Daniel Look","Duncan Melville",
+                                        "Ivan Ramler","Michael Schuckers","Lisa Torrey","Other"};
+        String[] classes = new String[]{"Concepts of Mathematics", "Mathematics and Art","PreCalculus","Calculus 1", "Calculus 2", "Multivariable Calculus",
+                                            "Vector Calculus","Differential Equations", "Linear Algebra", "Mathematical Problem Solving","Bridge to Higher Math",
+                                            "Symbolic Logic","Real Analysis", "Complex Analysis","Ring Theory", "Group Theory", "Graph Theory",
+                                            "Geometry","Financial Mathematics","History of Mathematics","Probability", "Mathematical Methods of Physics",
+                                            "Number Theory","Topology","Theory of Computation","Applied Statistics","Statistical Computing",
+                                            "Applied Regression Analysis","Statistical Methods of Data Collection","Topics in Statistical Learning",
+                                            "Mathematical Statistics","Econometrics","Time Series Analysis","Time Series Analysis","Intro to CS",
+                                            "Techniques of Computer Science","Computer Organization","Data Structures","Computer Networking",
+                                            "Web Programming","Software Engineering","Database Systems","Algorithm Analysis","Programming Analysis",
+                                            "Operating Systems","Artificial Intelligence","Theory of Computation","Intro to Economics","Microeconomics", "Macroeconomics",
+                                            "Quantitative Methods","Financial Accounting","Intro to Physics","Intro to Bio","Intro to Chem","Intro to Psych","Intro to Philosophy",
+                                            "Reasoning"};
+
+
+        ArrayAdapter<String> professorAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, professors);
+        ArrayAdapter<String> classAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,classes);
+
+        professorSpinner.setAdapter(professorAdapter);
+        classSpinner.setAdapter(classAdapter);
+
+
+
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
