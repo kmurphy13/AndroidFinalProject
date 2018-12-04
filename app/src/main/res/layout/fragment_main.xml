@@ -57,7 +57,7 @@
         android:padding="10dp"
         android:text="Sign In"
         android:textSize="30sp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/rounded_button"
         android:fontFamily="@font/latolight"/>
 
     <LinearLayout
@@ -77,7 +77,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create a new account"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/rounded_button"
+            android:padding="10dp"
             android:fontFamily="@font/latolight"/>
 
     </LinearLayout>
