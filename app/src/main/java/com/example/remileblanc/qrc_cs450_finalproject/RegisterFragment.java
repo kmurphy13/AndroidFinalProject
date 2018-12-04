@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -102,6 +103,51 @@ public class RegisterFragment extends Fragment {
             }
         });
 
+        student.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("here");
+                if (student.isChecked()) {
+                    // the user is a student
+                    student.setChecked(true);
+                    mentor.setChecked(false);
+                    professor.setChecked(false);
+                } else {
+                    student.setChecked(false);
+                }
+            }
+
+        });
+
+        mentor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mentor.isChecked()) {
+                    // the user is a student
+                    student.setChecked(false);
+                    mentor.setChecked(true);
+                    professor.setChecked(false);
+                } else {
+                    mentor.setChecked(false);
+                }
+            }
+        });
+
+
+        professor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (professor.isChecked()) {
+                    // the user is a student
+                    student.setChecked(false);
+                    mentor.setChecked(false);
+                    professor.setChecked(true);
+                } else {
+                    professor.setChecked(false);
+                }
+            }
+
+        });
 
         return rootView;
 
@@ -112,7 +158,6 @@ public class RegisterFragment extends Fragment {
         mDatabase.child("users").child(aUserID).setValue(user);
 
     }
-
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
