@@ -2,18 +2,24 @@ package com.example.remileblanc.qrc_cs450_finalproject;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -32,6 +39,12 @@ public class ScheduleSessionFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private String dayOfWeek;
+    private String shift;
+    private String course;
+    private String professor;
+    private ArrayList<String> mentors;
+    private ArrayList<String> qualMentors;
+
 
     public ScheduleSessionFragment() {
         // Required empty public constructor
@@ -50,6 +63,7 @@ public class ScheduleSessionFragment extends Fragment {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,6 +73,30 @@ public class ScheduleSessionFragment extends Fragment {
         final Spinner classSpinner = rootView.findViewById(R.id.classSpinner);
         final Spinner professorSpinner = rootView.findViewById(R.id.professorSpinner);
         final CalendarView calender = rootView.findViewById(R.id.calenderView);
+        final TimePicker timePicker = rootView.findViewById(R.id.timePicker);
+        final Button submitButton = rootView.findViewById(R.id.submitButton);
+
+
+        //create a list of items for the spinner.
+        String[] professors = new String[]{"--","Maegan Bos", "Jessica Chapman","Dan Cryster","Jim Defranza","Dante Giarusso","Robert Haney","Ed Harcourt", "Natasha Komarov","Choong-Soo Lee","Patti Frazer Lock","Robin Lock","Daniel Look","Duncan Melville", "Ivan Ramler","Michael Schuckers","Lisa Torrey","Other"};
+        String[] classes = new String[]{"--","Concepts of Mathematics", "Mathematics and Art","PreCalculus","Calculus 1", "Calculus 2",
+                "Multivariable Calculus","Vector Calculus","Differential Equations", "Linear Algebra", "Mathematical Problem Solving",
+                "Bridge to Higher Math", "Symbolic Logic","Real Analysis", "Complex Analysis","Ring Theory", "Group Theory", "Graph Theory",
+                "Geometry","Financial Mathematics","History of Mathematics","Probability", "Mathematical Methods of Physics", "Number Theory",
+                "Topology","Theory of Computation","Applied Statistics","Statistical Computing", "Applied Regression Analysis",
+                "Statistical Methods of Data Collection","Topics in Statistical Learning", "Mathematical Statistics","Econometrics",
+                "Time Series Analysis","Time Series Analysis","Intro to CS", "Techniques of Computer Science","Computer Organization",
+                "Data Structures","Computer Networking", "Web Programming","Software Engineering","Database Systems","Algorithm Analysis",
+                "Programming Analysis", "Operating Systems","Artificial Intelligence","Theory of Computation","Intro to Economics",
+                "Microeconomics", "Macroeconomics", "Quantitative Methods","Financial Accounting","Intro to Physics","Intro to Bio",
+                "Intro to Chem","Intro to Psych","Intro to Philosophy", "Reasoning"};
+
+
+        ArrayAdapter<String> professorAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, professors);
+        ArrayAdapter<String> classAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,classes);
+
+        professorSpinner.setAdapter(professorAdapter);
+        classSpinner.setAdapter(classAdapter);
 
 
         calender.setOnDateChangeListener(new OnDateChangeListener() {
@@ -79,72 +117,177 @@ public class ScheduleSessionFragment extends Fragment {
                 // Then get the day of week from the Date based on specific locale.
                 dayOfWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date);
 
-                System.out.println(year +","+ month+","+dayOfMonth);
-                System.out.println(dayOfWeek);
 
-                // Write a message to the database
+
+            }
+        });
+
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+
+                shift = getShift(hourOfDay);
+
+            }
+        });
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("Schedule");
+                DatabaseReference myRef0 = database.getReference("Schedule");
+                DatabaseReference myRef1 = database.getReference("mentorClasses");
 
-                // Read from the database
-                myRef.addValueEventListener(new ValueEventListener() {
+
+                course = classSpinner.getSelectedItem().toString();
+                professor = professorSpinner.getSelectedItem().toString();
+                mentors = new ArrayList<>();
+                qualMentors = new ArrayList<>();
+
+                // This is the get mentors the work during the selected shift
+                myRef0.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
-                        //String value = dataSnapshot.getValue(String.class);
+
                         for(DataSnapshot ds : dataSnapshot.getChildren()){
                             if(ds.getKey().equals(dayOfWeek)){
                                 for(DataSnapshot dataSnap: ds.getChildren()) {
-                                    if(dataSnap.getKey().equals("10-11pm")){
+                                    if(dataSnap.getKey().equals(shift)){
                                         for(DataSnapshot dataSnapshot1: dataSnap.getChildren()){
                                             String mentor = dataSnapshot1.getValue(String.class);
-                                            System.out.println(mentor);
+                                            mentors.add(mentor);
                                         }
                                     }
                                 }
                             }
                         }
-
+                        for(String m : mentors){
+                            System.out.println("M: "+m);
+                        }
                     }
                     @Override
                     public void onCancelled(DatabaseError error) {
                         // Failed to read value
-                        System.out.println("here");
+                        System.out.println("Submit cancelled for some reason");
+                    }
+
+                });
+
+                myRef1.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds : dataSnapshot.getChildren()){
+                            if(ds.getKey().equals(course)){
+                                for(DataSnapshot dataSnap: ds.getChildren()) {
+                                    if(mentors.contains(dataSnap.getValue(String.class))){
+                                        String qualMentor = dataSnap.getValue(String.class);
+                                        qualMentors.add(qualMentor);
+                                    }
+                                }
+                            }
+                        }
+                        if(mentors.size() > 0 && qualMentors.size() == 0){
+                            System.out.println("There are no mentors who have taken this course working during the time you selected.");
+                        }
+                        for(String m : qualMentors){
+                            System.out.println("QM: "+m);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
                     }
                 });
+
+
+
             }
         });
 
 
-
-
-        //create a list of items for the spinner.
-        String[] professors = new String[]{"Maegan Bos", "Jessica Chapman","Dan Cryster","Jim Defranza","Dante Giarusso","Robert Haney","Ed Harcourt", "Natasha Komarov","Choong-Soo Lee","Patti Frazer Lock","Robin Lock","Daniel Look","Duncan Melville", "Ivan Ramler","Michael Schuckers","Lisa Torrey","Other"};
-        String[] classes = new String[]{"Concepts of Mathematics", "Mathematics and Art","PreCalculus","Calculus 1", "Calculus 2",
-                "Multivariable Calculus","Vector Calculus","Differential Equations", "Linear Algebra", "Mathematical Problem Solving",
-                "Bridge to Higher Math", "Symbolic Logic","Real Analysis", "Complex Analysis","Ring Theory", "Group Theory", "Graph Theory",
-                "Geometry","Financial Mathematics","History of Mathematics","Probability", "Mathematical Methods of Physics", "Number Theory",
-                "Topology","Theory of Computation","Applied Statistics","Statistical Computing", "Applied Regression Analysis",
-                "Statistical Methods of Data Collection","Topics in Statistical Learning", "Mathematical Statistics","Econometrics",
-                "Time Series Analysis","Time Series Analysis","Intro to CS", "Techniques of Computer Science","Computer Organization",
-                "Data Structures","Computer Networking", "Web Programming","Software Engineering","Database Systems","Algorithm Analysis",
-                "Programming Analysis", "Operating Systems","Artificial Intelligence","Theory of Computation","Intro to Economics",
-                "Microeconomics", "Macroeconomics", "Quantitative Methods","Financial Accounting","Intro to Physics","Intro to Bio",
-                "Intro to Chem","Intro to Psych","Intro to Philosophy", "Reasoning"};
-
-
-        ArrayAdapter<String> professorAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, professors);
-        ArrayAdapter<String> classAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,classes);
-
-        professorSpinner.setAdapter(professorAdapter);
-        classSpinner.setAdapter(classAdapter);
-
-
-
-
-
         return rootView;
+
+    }
+
+    public String getShift(int hour){
+        String shift = "init";
+        switch (hour) {
+            case 0:
+                shift =  "closed";
+                break;
+            case 1:
+                shift = "closed";
+                break;
+            case 2:
+                shift = "closed";
+                break;
+            case 3:
+                shift = "closed";
+                break;
+            case 4:
+                shift = "closed";
+                break;
+            case 5:
+                shift = "closed";
+                break;
+            case 6:
+                shift = "closed";
+                break;
+            case 7:
+                shift = "closed";
+                break;
+            case 8:
+                shift = "closed";
+                break;
+            case 9:
+                shift = "closed";
+                break;
+            case 10:
+                shift = "10-11am";
+                break;
+            case 11:
+                shift = "11-12";
+                break;
+            case 12:
+                shift = "12-1";
+                break;
+            case 13:
+                shift = "1-2";
+                break;
+            case 14:
+                shift = "2-3";
+                break;
+            case 15:
+                shift = "3-4";
+                break;
+            case 16:
+                shift = "4-5";
+                break;
+            case 17:
+                shift = "5-6";
+                break;
+            case 18:
+                shift = "6-7";
+                break;
+            case 19:
+                shift = "7-8";
+                break;
+            case 20:
+                shift = "8-9";
+                break;
+            case 21:
+                shift = "9-10";
+                break;
+            case 22:
+                shift = "10-11pm";
+                break;
+            case 23:
+                shift = "closed";
+                break;
+        }
+        return shift;
     }
 
 

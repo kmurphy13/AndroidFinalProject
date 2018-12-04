@@ -96,7 +96,7 @@ public class CheckInFragment extends Fragment {
         professorSpinner.setAdapter(professorAdapter);
         classSpinner.setAdapter(classAdapter);
 
-
+        
 
 
         return rootView;
