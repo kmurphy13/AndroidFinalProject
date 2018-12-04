@@ -92,7 +92,7 @@ public class CheckInActivity extends AppCompatActivity implements CheckInFragmen
         }
     }
 
-    public String getUserType(){
+    public String getObjectiveType(){
         CheckBox mentorHelp = findViewById(R.id.mentorHelp);
         CheckBox bookCheckout = findViewById(R.id.bookCheckout);
         CheckBox calculatorCheckout = findViewById(R.id.calculatorCheckout);

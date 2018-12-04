@@ -122,9 +122,10 @@ public class CheckInFragment extends Fragment {
             public void onClick(View view) {
                 String selectedProfessor = professorSpinner.getSelectedItem().toString();
                 String selectedClass = classSpinner.getSelectedItem().toString();
+                String objective = ((CheckInActivity) getActivity()).getObjectiveType();
                 System.out.println(selectedClass);
                 System.out.println(selectedProfessor);
-                writeNewCheckIn(userName,selectedProfessor,selectedClass,"Mentor");
+                writeNewCheckIn(userName,selectedProfessor,selectedClass,objective);
             }
         });
 
