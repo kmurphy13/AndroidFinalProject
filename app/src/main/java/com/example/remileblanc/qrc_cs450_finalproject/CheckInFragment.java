@@ -8,8 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +40,12 @@ public class CheckInFragment extends Fragment {
     private String mParam2;
 
     private CheckInFragment.OnFragmentInteractionListener mListener;
+
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+
+    private String userName;
 
     public CheckInFragment() {
         // Required empty public constructor
@@ -56,10 +72,9 @@ public class CheckInFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
     }
 
     @Override
@@ -68,15 +83,21 @@ public class CheckInFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_check_in, container, false);
 
-        //Get Spinners
-        Spinner classSpinner = rootView.findViewById(R.id.classSpinner);
-        Spinner professorSpinner = rootView.findViewById(R.id.professorSpinner);
+        // Get user's name
+        getName(mAuth.getCurrentUser());
+
+        // Get Spinners
+        final Spinner classSpinner = rootView.findViewById(R.id.classSpinner);
+        final Spinner professorSpinner = rootView.findViewById(R.id.professorSpinner);
+
+        // Get Button
+        Button submitButton = rootView.findViewById(R.id.checkInSubmitButton);
 
         //create a list of items for the spinner.
-        String[] professors = new String[]{"Maegan Bos", "Jessica Chapman","Dan Cryster","Jim Defranza","Dante Giarusso","Robert Haney","Ed Harcourt",
+        String[] professors = new String[]{"--","Maegan Bos", "Jessica Chapman","Dan Cryster","Jim Defranza","Dante Giarusso","Robert Haney","Ed Harcourt",
                                         "Natasha Komarov","Choong-Soo Lee","Patti Frazer Lock","Robin Lock","Daniel Look","Duncan Melville",
                                         "Ivan Ramler","Michael Schuckers","Lisa Torrey","Other"};
-        String[] classes = new String[]{"Concepts of Mathematics", "Mathematics and Art","PreCalculus","Calculus 1", "Calculus 2", "Multivariable Calculus",
+        String[] classes = new String[]{"--","Concepts of Mathematics", "Mathematics and Art","PreCalculus","Calculus 1", "Calculus 2", "Multivariable Calculus",
                                             "Vector Calculus","Differential Equations", "Linear Algebra", "Mathematical Problem Solving","Bridge to Higher Math",
                                             "Symbolic Logic","Real Analysis", "Complex Analysis","Ring Theory", "Group Theory", "Graph Theory",
                                             "Geometry","Financial Mathematics","History of Mathematics","Probability", "Mathematical Methods of Physics",
@@ -87,7 +108,7 @@ public class CheckInFragment extends Fragment {
                                             "Web Programming","Software Engineering","Database Systems","Algorithm Analysis","Programming Analysis",
                                             "Operating Systems","Artificial Intelligence","Theory of Computation","Intro to Economics","Microeconomics", "Macroeconomics",
                                             "Quantitative Methods","Financial Accounting","Intro to Physics","Intro to Bio","Intro to Chem","Intro to Psych","Intro to Philosophy",
-                                            "Reasoning"};
+                                            "Reasoning","Other"};
 
 
         ArrayAdapter<String> professorAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, professors);
@@ -96,10 +117,47 @@ public class CheckInFragment extends Fragment {
         professorSpinner.setAdapter(professorAdapter);
         classSpinner.setAdapter(classAdapter);
 
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String selectedProfessor = professorSpinner.getSelectedItem().toString();
+                String selectedClass = classSpinner.getSelectedItem().toString();
+                System.out.println(selectedClass);
+                System.out.println(selectedProfessor);
+                writeNewCheckIn(userName,selectedProfessor,selectedClass,"Mentor");
+            }
+        });
+
+
+
 
 
 
         return rootView;
+    }
+
+    public void writeNewCheckIn(String aUserName,String aProfessor, String aCourse, String anObjective) {
+        QRCCheckIn checkIn = new QRCCheckIn(aUserName,aProfessor,aCourse,anObjective);
+        mDatabase.child("checkIns").child(aCourse).child(Calendar.getInstance().getTime().toString()).setValue(checkIn);
+    }
+
+    public void getName(final FirebaseUser specificUser){
+        final DatabaseReference users = database.getReference("users");
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    if(ds.getKey().equals(specificUser.getUid())){
+                        userName = ds.child("firstName").getValue() + " " + ds.child("lastName").getValue();
+                        System.out.println(userName);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
