@@ -42,9 +42,37 @@
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Please select your desired date."
+        android:gravity="center_horizontal"/>
+
     <CalendarView
         android:id="@+id/calenderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></CalendarView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Please select your desired time."
+        android:gravity="center_horizontal"/>
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner"></TimePicker>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Submit"
+        android:textSize="20sp" />
 
 </LinearLayout>

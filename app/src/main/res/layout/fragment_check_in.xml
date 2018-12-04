@@ -67,35 +67,40 @@
             android:text="Mentor Help"
             android:layout_weight="1"
             android:textSize="12sp"
-            android:fontFamily="@font/latolight"/>
+            android:fontFamily="@font/latolight"
+            android:id="@+id/mentorHelp"/>
         <CheckBox
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Book Checkout"
             android:layout_weight="1"
             android:textSize="12sp"
-            android:fontFamily="@font/latolight"/>
+            android:fontFamily="@font/latolight"
+            android:id="@+id/bookCheckout"/>
         <CheckBox
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Calculator Checkout"
             android:layout_weight="1"
             android:textSize="12sp"
-            android:fontFamily="@font/latolight"/>
+            android:fontFamily="@font/latolight"
+            android:id="@+id/calculatorCheckout"/>
         <CheckBox
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Doing Homework"
             android:layout_weight="1"
             android:textSize="12sp"
-            android:fontFamily="@font/latolight"/>
+            android:fontFamily="@font/latolight"
+            android:id="@+id/doingHW"/>
         <CheckBox
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="QRC Event"
             android:textSize="12sp"
-            android:fontFamily="@font/latolight"/>
+            android:fontFamily="@font/latolight"
+            android:id="@+id/qrcEvent"/>
 
     </LinearLayout>
     <Button

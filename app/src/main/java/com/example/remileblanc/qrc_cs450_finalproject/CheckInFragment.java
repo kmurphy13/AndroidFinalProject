@@ -129,10 +129,6 @@ public class CheckInFragment extends Fragment {
         });
 
 
-
-
-
-
         return rootView;
     }
 
