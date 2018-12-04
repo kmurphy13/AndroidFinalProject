@@ -32,7 +32,8 @@
         android:textSize="20sp"
         android:background="@color/colorAccent"
         android:padding="10dp"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        />
     <Button
         android:id="@+id/WriteEvaluationButton"
         android:layout_width="match_parent"
