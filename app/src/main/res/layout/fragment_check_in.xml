@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:gravity="center_horizontal"
+        android:padding="5dp"
         android:text="What class are you here for?"
         android:fontFamily="@font/latolight"/>
     <Spinner
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:text="Who is your professor?"
-        android:gravity="center_horizontal"
+        android:padding="5dp"
         android:fontFamily="@font/latolight"/>
     <Spinner
         android:id="@+id/professorSpinner"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:text="What will you be doing today?"
         android:textSize="20sp"
-        android:gravity="center_horizontal"
+        android:padding="5dp"
         android:fontFamily="@font/latolight"/>
 
 
@@ -103,6 +103,15 @@
             android:id="@+id/qrcEvent"/>
 
     </LinearLayout>
+    <Button
+        android:id="@+id/checkInSubmitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"
+        android:text="Submit"
+        android:fontFamily="@font/latolight"
+        android:padding="10dp"/>
 
 
 
