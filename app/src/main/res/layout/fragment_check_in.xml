@@ -4,26 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CheckInFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Check in to the QRC"
-        android:textSize="40sp"
+        android:textSize="60sp"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:fontFamily="@font/latolight"/>
+        android:fontFamily="@font/latolight"
+        />
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:padding="5dp"
         android:text="What class are you here for?"
-        android:fontFamily="@font/latolight"/>
+        android:fontFamily="@font/latolight"
+       />
     <Spinner
         android:id="@+id/classSpinner"
         android:layout_width="match_parent"
@@ -35,10 +39,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:text="Who is your professor?"
         android:padding="5dp"
-        android:fontFamily="@font/latolight"/>
+        android:fontFamily="@font/latolight"
+        />
     <Spinner
         android:id="@+id/professorSpinner"
         android:layout_width="match_parent"
@@ -51,15 +56,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="What will you be doing today?"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:padding="5dp"
-        android:fontFamily="@font/latolight"/>
+        android:fontFamily="@font/latolight"
+        />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+
         >
         <CheckBox
             android:layout_width="0dp"
@@ -68,7 +75,8 @@
             android:layout_weight="1"
             android:textSize="12sp"
             android:fontFamily="@font/latolight"
-            android:id="@+id/mentorHelp"/>
+            android:id="@+id/mentorHelp"
+            />
         <CheckBox
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -76,7 +84,8 @@
             android:layout_weight="1"
             android:textSize="12sp"
             android:fontFamily="@font/latolight"
-            android:id="@+id/bookCheckout"/>
+            android:id="@+id/bookCheckout"
+            />
         <CheckBox
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -84,7 +93,8 @@
             android:layout_weight="1"
             android:textSize="12sp"
             android:fontFamily="@font/latolight"
-            android:id="@+id/calculatorCheckout"/>
+            android:id="@+id/calculatorCheckout"
+            />
         <CheckBox
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -92,7 +102,8 @@
             android:layout_weight="1"
             android:textSize="12sp"
             android:fontFamily="@font/latolight"
-            android:id="@+id/doingHW"/>
+            android:id="@+id/doingHW"
+           />
         <CheckBox
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -100,18 +111,31 @@
             android:text="QRC Event"
             android:textSize="12sp"
             android:fontFamily="@font/latolight"
-            android:id="@+id/qrcEvent"/>
+            android:id="@+id/qrcEvent"
+            />
 
     </LinearLayout>
+
     <Button
         android:id="@+id/checkInSubmitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textSize="16sp"
+        android:textSize="25sp"
         android:text="Submit"
         android:fontFamily="@font/latolight"
-        android:padding="10dp"/>
+        android:background="@drawable/rounded_button"
+        android:padding="10dp"
+        android:layout_margin="20dp"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/logo"
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        />
 
 
 

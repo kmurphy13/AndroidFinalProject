@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
 
-    <EditText
+    <TextView
+        android:id="@+id/professorGreeting"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello Professor!"/>
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/latolight"
+        android:gravity="center"
+        android:text="Hello Professor!"
+        android:textSize="50sp" />
+
+    <Button
+        android:id="@+id/studentUsageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_button"
+        android:fontFamily="@font/latolight"
+        android:padding="10dp"
+        android:text="View students who have checked in to the QRC"
+        android:textSize="20sp"
+        />
+    <Button
+        android:id="@+id/postAssignmentButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_button"
+        android:fontFamily="@font/latolight"
+        android:padding="10dp"
+        android:text="Post an Exam, Quiz or Assignment"
+        android:textSize="20sp"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/logo"
+        android:layout_gravity="bottom"
+        android:layout_margin="50dp"
+        />
 
 
-</android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

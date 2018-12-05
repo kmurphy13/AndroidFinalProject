@@ -207,7 +207,7 @@ public class MainFragment extends Fragment {
                 getActivity().startActivity(intent2);
                 break;
         }
-        Toast.makeText(getContext(), "Hello " + aUser.getEmail(), Toast.LENGTH_LONG).show();
+
     }
 
     @Override

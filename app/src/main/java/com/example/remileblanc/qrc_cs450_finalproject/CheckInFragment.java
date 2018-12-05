@@ -1,6 +1,7 @@
 package com.example.remileblanc.qrc_cs450_finalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -126,6 +128,13 @@ public class CheckInFragment extends Fragment {
                 System.out.println(selectedClass);
                 System.out.println(selectedProfessor);
                 writeNewCheckIn(userName,selectedProfessor,selectedClass,objective);
+
+                Toast.makeText(getContext(), "You have successfully checked in to the QRC! Thank you.", Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(getActivity(), StudentActivity.class);
+                getActivity().startActivity(intent);
+
+
             }
         });
 
