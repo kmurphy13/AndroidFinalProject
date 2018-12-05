@@ -1,7 +1,6 @@
 package com.example.remileblanc.qrc_cs450_finalproject;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -125,18 +125,101 @@ public class CheckInFragment extends Fragment {
                 String selectedProfessor = professorSpinner.getSelectedItem().toString();
                 String selectedClass = classSpinner.getSelectedItem().toString();
                 String objective = ((CheckInActivity) getActivity()).getObjectiveType();
-                System.out.println(selectedClass);
-                System.out.println(selectedProfessor);
-                writeNewCheckIn(userName,selectedProfessor,selectedClass,objective);
-
-                Toast.makeText(getContext(), "You have successfully checked in to the QRC! Thank you.", Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(getActivity(), StudentActivity.class);
-                getActivity().startActivity(intent);
-
-
+                if(selectedClass.equals("--") || selectedProfessor.equals("--") || objective.equals(null)){
+                    Toast.makeText(getContext(), "Please enter all required fields", Toast.LENGTH_LONG).show();
+                } else {
+                    writeNewCheckIn(userName, selectedProfessor, selectedClass, objective);
+                }
             }
         });
+
+        final CheckBox mentorHelp = rootView.findViewById(R.id.mentorHelp);
+        final CheckBox bookCheckout = rootView.findViewById(R.id.bookCheckout);
+        final CheckBox calculatorCheckout = rootView.findViewById(R.id.calculatorCheckout);
+        final CheckBox doingHW = rootView.findViewById(R.id.doingHW);
+        final CheckBox qrcEvent = rootView.findViewById(R.id.qrcEvent);
+
+
+        mentorHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mentorHelp.isChecked()) {
+                    mentorHelp.setChecked(true);
+                    bookCheckout.setChecked(false);
+                    calculatorCheckout.setChecked(false);
+                    doingHW.setChecked(false);
+                    qrcEvent.setChecked(false);
+                }else {
+                    mentorHelp.setChecked(false);
+                }
+            }
+
+        });
+
+        bookCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bookCheckout.isChecked()) {
+                    mentorHelp.setChecked(false);
+                    bookCheckout.setChecked(true);
+                    calculatorCheckout.setChecked(false);
+                    doingHW.setChecked(false);
+                    qrcEvent.setChecked(false);
+                }else {
+                    bookCheckout.setChecked(false);
+                }
+            }
+
+        });
+
+        calculatorCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (calculatorCheckout.isChecked()) {
+                    mentorHelp.setChecked(false);
+                    bookCheckout.setChecked(false);
+                    calculatorCheckout.setChecked(true);
+                    doingHW.setChecked(false);
+                    qrcEvent.setChecked(false);
+                }else {
+                    calculatorCheckout.setChecked(false);
+                }
+            }
+
+        });
+
+        doingHW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (doingHW.isChecked()) {
+                    mentorHelp.setChecked(false);
+                    bookCheckout.setChecked(false);
+                    calculatorCheckout.setChecked(false);
+                    doingHW.setChecked(true);
+                    qrcEvent.setChecked(false);
+                }else {
+                    doingHW.setChecked(false);
+                }
+            }
+
+        });
+
+        qrcEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (qrcEvent.isChecked()) {
+                    mentorHelp.setChecked(false);
+                    bookCheckout.setChecked(false);
+                    calculatorCheckout.setChecked(false);
+                    doingHW.setChecked(false);
+                    qrcEvent.setChecked(true);
+                }else {
+                    qrcEvent.setChecked(false);
+                }
+            }
+
+        });
+
 
 
         return rootView;

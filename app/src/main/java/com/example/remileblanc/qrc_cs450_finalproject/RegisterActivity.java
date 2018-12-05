@@ -21,52 +21,51 @@ public class RegisterActivity extends AppCompatActivity implements RegisterFragm
     public void onFragmentInteraction(Uri uri) {
 
     }
-
-    public void onCheckboxClicked(View view) {
-        // Is the view now checked?
-
-        CheckBox student = findViewById(R.id.checkbox_student);
-        CheckBox mentor = findViewById(R.id.checkbox_mentor);
-        CheckBox professor = findViewById(R.id.checkbox_professor);
-
-        boolean checked = ((CheckBox) view).isChecked();
-
-        // Check which checkbox was clicked
-        switch(view.getId()) {
-            case R.id.checkbox_student:
-                if (checked) {
-                    // the user is a student
-                    student.setChecked(true);
-                    mentor.setChecked(false);
-                    professor.setChecked(false);
-                }else {
-                    student.setChecked(false);
-                }
-                break;
-            case R.id.checkbox_mentor:
-                if (checked) {
-                    // the user is a mentor
-                    student.setChecked(false);
-                    mentor.setChecked(true);
-                    professor.setChecked(false);
-                }else {
-                    // I'm lactose intolerant
-                    mentor.setChecked(false);
-                }
-                break;
-            case R.id.checkbox_professor:
-                if (checked) {
-                    // the user is a professor
-                    student.setChecked(false);
-                    mentor.setChecked(false);
-                    professor.setChecked(true);
-                }else {
-                    professor.setChecked(false);
-                }
-                break;
-            // TODO: Veggie sandwich
-        }
-    }
+//
+//    public void onCheckboxClicked(View view) {
+//        // Is the view now checked?
+//
+//        CheckBox student = findViewById(R.id.checkbox_student);
+//        CheckBox mentor = findViewById(R.id.checkbox_mentor);
+//        CheckBox professor = findViewById(R.id.checkbox_professor);
+//
+//        boolean checked = ((CheckBox) view).isChecked();
+//
+//        // Check which checkbox was clicked
+//        switch(view.getId()) {
+//            case R.id.checkbox_student:
+//                if (checked) {
+//                    // the user is a student
+//                    student.setChecked(true);
+//                    mentor.setChecked(false);
+//                    professor.setChecked(false);
+//                }else {
+//                    student.setChecked(false);
+//                }
+//                break;
+//            case R.id.checkbox_mentor:
+//                if (checked) {
+//                    // the user is a mentor
+//                    student.setChecked(false);
+//                    mentor.setChecked(true);
+//                    professor.setChecked(false);
+//                }else {
+//                    // I'm lactose intolerant
+//                    mentor.setChecked(false);
+//                }
+//                break;
+//            case R.id.checkbox_professor:
+//                if (checked) {
+//                    // the user is a professor
+//                    student.setChecked(false);
+//                    mentor.setChecked(false);
+//                    professor.setChecked(true);
+//                }else {
+//                    professor.setChecked(false);
+//                }
+//                break;
+//        }
+//    }
 
     public String getUserType(){
         CheckBox student = findViewById(R.id.checkbox_student);
