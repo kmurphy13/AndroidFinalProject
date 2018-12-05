@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -124,9 +125,11 @@ public class CheckInFragment extends Fragment {
                 String selectedProfessor = professorSpinner.getSelectedItem().toString();
                 String selectedClass = classSpinner.getSelectedItem().toString();
                 String objective = ((CheckInActivity) getActivity()).getObjectiveType();
-                System.out.println(selectedClass);
-                System.out.println(selectedProfessor);
-                writeNewCheckIn(userName,selectedProfessor,selectedClass,objective);
+                if(selectedClass.equals("--") || selectedProfessor.equals("--") || objective.equals(null)){
+                    Toast.makeText(getContext(), "Please enter all required fields", Toast.LENGTH_LONG).show();
+                } else {
+                    writeNewCheckIn(userName, selectedProfessor, selectedClass, objective);
+                }
             }
         });
 
@@ -204,7 +207,7 @@ public class CheckInFragment extends Fragment {
         qrcEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (doingHW.isChecked()) {
+                if (qrcEvent.isChecked()) {
                     mentorHelp.setChecked(false);
                     bookCheckout.setChecked(false);
                     calculatorCheckout.setChecked(false);
@@ -216,7 +219,7 @@ public class CheckInFragment extends Fragment {
             }
 
         });
-        
+
 
 
         return rootView;

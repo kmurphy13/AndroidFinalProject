@@ -98,7 +98,15 @@ public class RegisterFragment extends Fragment {
                 newPassword = rootView.findViewById(R.id.newPassword);
                 password = newPassword.getText().toString();
 
-                createAccount(email, password);
+                userType = ((RegisterActivity) getActivity()).getUserType();
+
+
+                if(email.equals(null) || password.equals(null) || firstName.equals(null) || lastName.equals(null) || userType.equals(null)){
+                    Toast.makeText(getContext(), "Please enter all required fields", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    createAccount(email, password);
+                }
 
             }
         });
