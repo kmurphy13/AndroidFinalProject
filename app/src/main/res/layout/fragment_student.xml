@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_gravity="center">
-
+    android:gravity="center_horizontal"
+    tools:context=".StudentFragment"
+    android:background="@color/white"
+    >
 
     <TextView
         android:id="@+id/HelloStudent"
@@ -12,7 +16,8 @@
         android:layout_height="wrap_content"
         android:text="Hello Student!"
         android:gravity="center"
-        android:textSize="50sp"
+        android:textSize="60sp"
+        android:fontFamily="@font/latolight"
         />
 
     <Button
@@ -23,7 +28,9 @@
         android:textSize="20sp"
         android:background="@drawable/rounded_button"
         android:padding="10dp"
-        android:layout_margin="10dp"/>
+        android:layout_margin="20dp"
+        android:fontFamily="@font/latolight"
+        />
 
     <Button
         android:id="@+id/CheckInToQRCButton"
@@ -33,7 +40,8 @@
         android:textSize="20sp"
         android:background="@drawable/rounded_button"
         android:padding="10dp"
-        android:layout_margin="10dp"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/latolight"
         />
     <Button
         android:id="@+id/WriteEvaluationButton"
@@ -43,7 +51,8 @@
         android:textSize="20sp"
         android:background="@drawable/rounded_button"
         android:padding="10dp"
-        android:layout_margin="10dp"/>
+        android:layout_margin="20dp"
+        android:fontFamily="@font/latolight"/>
     <Button
         android:id="@+id/StudyCornerButton"
         android:layout_width="match_parent"
@@ -52,7 +61,17 @@
         android:text="Study Corner"
         android:background="@drawable/rounded_button"
         android:padding="10dp"
-        android:layout_margin="10dp"/>
+        android:layout_margin="20dp"
+        android:fontFamily="@font/latolight"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/logo"
+        android:layout_gravity="bottom"
+        android:layout_margin="50dp"
+        />
+
 
 
 </LinearLayout>

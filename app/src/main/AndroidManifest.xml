@@ -20,8 +20,10 @@
         <activity android:name=".MentorActivity" />
         <activity android:name=".StudentActivity" />
         <activity android:name=".ScheduleSessionActivity" />
-        <activity android:name=".StudyCornerActivity"></activity>
-        <activity android:name=".CheckInActivity"/>
+        <activity android:name=".StudyCornerActivity" />
+        <activity android:name=".CheckInActivity" />
+        <activity android:name=".ProfessorActivity" />
+        <activity android:name=".StudentUsageActivity"></activity>
     </application>
 
 </manifest>

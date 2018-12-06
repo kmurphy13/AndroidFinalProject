@@ -4,15 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RegisterFragment">
+    tools:context=".RegisterFragment"
+    android:background="@color/white">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="15dp"
-        android:text="Sign up for the QRC App"
-        android:textSize="30sp" />
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/smallshield"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:padding="10dp"
+            android:text="Sign up for the QRC App"
+            android:textSize="65sp"
+            android:fontFamily="@font/latolight"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
 
     <EditText
         android:id="@+id/newFirstName"
@@ -20,7 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="First Name" />
+        android:hint="First Name"
+        android:fontFamily="@font/latolight"/>
 
     <EditText
         android:id="@+id/newLastName"
@@ -28,7 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Last Name" />
+        android:hint="Last Name"
+        android:fontFamily="@font/latolight"/>
 
     <EditText
         android:id="@+id/newEmail"
@@ -36,7 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Email" />
+        android:hint="Email"
+        android:fontFamily="@font/latolight"/>
 
     <EditText
         android:id="@+id/newPassword"
@@ -45,7 +63,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:fontFamily="@font/latolight"/>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,7 +80,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
-            android:text="Student" />
+            android:text="Student"
+            android:fontFamily="@font/latolight"/>
 
         <CheckBox
             android:id="@+id/checkbox_mentor"
@@ -68,7 +90,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
-            android:text="Mentor" />
+            android:text="Mentor"
+            android:fontFamily="@font/latolight"/>
 
         <CheckBox
             android:id="@+id/checkbox_professor"
@@ -77,7 +100,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1.2"
-            android:text="Professor" />
+            android:text="Professor"
+            android:fontFamily="@font/latolight"/>
     </LinearLayout>
 
     <Button
@@ -86,7 +110,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Register"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:fontFamily="@font/latolight"
+        android:background="@drawable/rounded_button"
+        android:padding="10dp"/>
+
+
 
 
 </LinearLayout>

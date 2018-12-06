@@ -156,6 +156,9 @@ public class RegisterFragment extends Fragment {
 
         });
 
+
+
+
         return rootView;
 
     }
@@ -171,6 +174,7 @@ public class RegisterFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
 
 
 
