@@ -101,7 +101,7 @@ public class RegisterFragment extends Fragment {
                 userType = ((RegisterActivity) getActivity()).getUserType();
 
 
-                if(email.equals(null) || password.equals(null) || firstName.equals(null) || lastName.equals(null) || userType.equals(null)){
+                if(email == null || password == null || firstName == null|| lastName == null || userType == null){
                     Toast.makeText(getContext(), "Please enter all required fields", Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -114,7 +114,6 @@ public class RegisterFragment extends Fragment {
         student.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("here");
                 if (student.isChecked()) {
                     // the user is a student
                     student.setChecked(true);
