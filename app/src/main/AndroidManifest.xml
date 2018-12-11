@@ -5,10 +5,10 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="QRC Application"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        >
+        android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +23,7 @@
         <activity android:name=".StudyCornerActivity" />
         <activity android:name=".CheckInActivity" />
         <activity android:name=".ProfessorActivity" />
-        <activity android:name=".StudentUsageActivity" />
-        <activity android:name=".PostAssignmentActivity"></activity>
+        <activity android:name=".StudentUsageActivity"></activity>
     </application>
 
 </manifest>
