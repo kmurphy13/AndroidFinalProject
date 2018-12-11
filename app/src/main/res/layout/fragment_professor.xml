@@ -33,7 +33,7 @@
         android:background="@drawable/rounded_button"
         android:fontFamily="@font/latolight"
         android:padding="10dp"
-        android:text="Post an Exam, Quiz or Assignment"
+        android:text="Post an Exam, Quiz, or Assignment"
         android:textSize="20sp"/>
 
     <ImageView

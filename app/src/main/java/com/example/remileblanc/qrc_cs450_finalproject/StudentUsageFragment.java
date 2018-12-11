@@ -2,11 +2,24 @@ package com.example.remileblanc.qrc_cs450_finalproject;
 
 import android.content.Context;
 import android.net.Uri;
+import android.net.wifi.hotspot2.pps.Credential;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -28,6 +41,19 @@ public class StudentUsageFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+
+    private ScrollView studentUsageScrollView;
+    private TextView studentUsageData;
+    private TextView totalVisits;
+
+
+
+    FirebaseUser currentUser;
+    private String userName;
 
     public StudentUsageFragment() {
         // Required empty public constructor
@@ -54,17 +80,79 @@ public class StudentUsageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_usage, container, false);
+
+        final View rootView = inflater.inflate(R.layout.fragment_student_usage, container, false);
+
+        studentUsageScrollView = rootView.findViewById(R.id.studentUsageScrollView);
+        studentUsageData = rootView.findViewById(R.id.studentUsageData);
+        totalVisits = rootView.findViewById(R.id.totalVisits);
+
+        currentUser = mAuth.getCurrentUser();
+        getName(currentUser);
+
+
+
+        DatabaseReference checkIns = database.getReference("checkIns");
+        checkIns.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int count = 1;
+                for(DataSnapshot course : dataSnapshot.getChildren()){
+                    for(DataSnapshot time : course.getChildren()){
+                        if((time.child("professor").getValue()).equals(userName)){
+                            String specificDate = time.getKey().substring(0,10);
+                            String specificTime = time.getKey().substring(11,16);
+                            String data ="- "+time.child("name").getValue()+" came to the QRC on "+specificDate+" at "+specificTime+" for "+time.child("course").getValue();
+                            studentUsageData.append(data);
+                            studentUsageData.append("\n\n");
+                            count ++;
+
+                        }
+                    }
+                }
+                totalVisits.setText("Total Visits for your Students: "+(count-1));
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+        return rootView;
+    }
+
+    public void getName(final FirebaseUser specificUser){
+        final DatabaseReference users = database.getReference("users");
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    if(ds.getKey().equals(specificUser.getUid())){
+                        userName = ds.child("firstName").getValue() + " " + ds.child("lastName").getValue();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

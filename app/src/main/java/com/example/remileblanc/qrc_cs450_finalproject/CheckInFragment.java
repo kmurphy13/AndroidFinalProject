@@ -1,6 +1,7 @@
 package com.example.remileblanc.qrc_cs450_finalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -124,11 +125,16 @@ public class CheckInFragment extends Fragment {
             public void onClick(View view) {
                 String selectedProfessor = professorSpinner.getSelectedItem().toString();
                 String selectedClass = classSpinner.getSelectedItem().toString();
-                String objective = ((CheckInActivity) getActivity()).getObjectiveType();
-                if(selectedClass.equals("--") || selectedProfessor.equals("--") || objective.equals(null)){
+                String objective = "";
+                objective= ((CheckInActivity) getActivity()).getObjectiveType();
+                if(selectedClass.equals("--") || selectedProfessor.equals("--") || objective == null){
                     Toast.makeText(getContext(), "Please enter all required fields", Toast.LENGTH_LONG).show();
+
                 } else {
                     writeNewCheckIn(userName, selectedProfessor, selectedClass, objective);
+                    Toast.makeText(getContext(), "You have successfully checked in to the QRC. Thank you!", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getActivity(), StudentActivity.class);
+                    getActivity().startActivity(intent);
                 }
             }
         });

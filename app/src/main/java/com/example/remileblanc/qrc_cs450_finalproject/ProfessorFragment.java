@@ -82,7 +82,15 @@ public class ProfessorFragment extends Fragment{
         studentUsageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                Intent intent = new Intent(getActivity(), StudentUsageActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        postAssignmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 

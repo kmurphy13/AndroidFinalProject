@@ -3,51 +3,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CheckInFragment"
-    android:orientation="vertical"
     android:background="@color/white"
-    >
+    android:orientation="vertical"
+    tools:context=".CheckInFragment">
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Check in to the QRC"
-        android:textSize="60sp"
+        android:fontFamily="@font/latolight"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:fontFamily="@font/latolight"
-        />
+        android:text="Check in to the QRC"
+        android:textSize="60sp" />
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:fontFamily="@font/latolight"
         android:padding="5dp"
         android:text="What class are you here for?"
-        android:fontFamily="@font/latolight"
-       />
+        android:textAlignment="center"
+        android:textSize="25sp" />
+
     <Spinner
         android:id="@+id/classSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        />
+        android:spinnerMode="dropdown" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:text="Who is your professor?"
-        android:padding="5dp"
         android:fontFamily="@font/latolight"
-        />
+        android:padding="5dp"
+        android:text="Who is your professor?"
+        android:textAlignment="center"
+        android:textSize="25sp" />
+
     <Spinner
         android:id="@+id/professorSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown" />
 
@@ -55,11 +60,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/latolight"
+        android:padding="5dp"
         android:text="What will you be doing today?"
         android:textSize="25sp"
-        android:padding="5dp"
-        android:fontFamily="@font/latolight"
-        />
+        android:textAlignment="center"/>
 
 
     <LinearLayout
@@ -68,51 +73,51 @@
         android:orientation="horizontal"
 
         >
+
         <CheckBox
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Mentor Help"
-            android:layout_weight="1"
-            android:textSize="12sp"
-            android:fontFamily="@font/latolight"
             android:id="@+id/mentorHelp"
-            />
-        <CheckBox
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Book Checkout"
             android:layout_weight="1"
-            android:textSize="12sp"
             android:fontFamily="@font/latolight"
+            android:text="Mentor Help"
+            android:textSize="12sp" />
+
+        <CheckBox
             android:id="@+id/bookCheckout"
-            />
-        <CheckBox
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Calculator Checkout"
             android:layout_weight="1"
-            android:textSize="12sp"
             android:fontFamily="@font/latolight"
+            android:text="Book Checkout"
+            android:textSize="12sp" />
+
+        <CheckBox
             android:id="@+id/calculatorCheckout"
-            />
-        <CheckBox
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Doing Homework"
             android:layout_weight="1"
-            android:textSize="12sp"
             android:fontFamily="@font/latolight"
+            android:text="Calculator Checkout"
+            android:textSize="12sp" />
+
+        <CheckBox
             android:id="@+id/doingHW"
-           />
-        <CheckBox
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="QRC Event"
-            android:textSize="12sp"
             android:fontFamily="@font/latolight"
+            android:text="Doing Homework"
+            android:textSize="12sp" />
+
+        <CheckBox
             android:id="@+id/qrcEvent"
-            />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/latolight"
+            android:text="QRC Event"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -121,24 +126,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textSize="25sp"
-        android:text="Submit"
-        android:fontFamily="@font/latolight"
-        android:background="@drawable/rounded_button"
-        android:padding="10dp"
         android:layout_margin="20dp"
-        />
+        android:background="@drawable/rounded_button"
+        android:fontFamily="@font/latolight"
+        android:padding="10dp"
+        android:text="Submit"
+        android:textSize="25sp" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/logo"
         android:layout_gravity="bottom"
         android:layout_margin="20dp"
-        />
-
-
-
+        android:background="@drawable/logo" />
 
 
 </LinearLayout>
