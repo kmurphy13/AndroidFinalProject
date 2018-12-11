@@ -3,12 +3,12 @@ package com.example.remileblanc.qrc_cs450_finalproject;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -31,8 +31,10 @@ public class PostAssignmentFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private String title;
-    private String additionalInfo;
+    private int year;
+    private int day;
+    private int month;
+    private String date;
 
     private OnFragmentInteractionListener mListener;
 
@@ -74,24 +76,20 @@ public class PostAssignmentFragment extends Fragment {
         View rootView =inflater.inflate(R.layout.fragment_post_assignment, container, false);
 
         Spinner assignmentSpinner = rootView.findViewById(R.id.assignmentSpinner);
-        final EditText assignmentTitle = rootView.findViewById(R.id.assignmentTitle);
-        final EditText additionalInformation = rootView.findViewById(R.id.additionalInformation);
-        Button submitAssignmentButton = rootView.findViewById(R.id.submitAssignmentButton);
+        EditText assignmentTitle = rootView.findViewById(R.id.assignmentTitle);
+        EditText additionalInformation = rootView.findViewById(R.id.additionalInformation);
 
-        String[] assignmentTypes = new String[]{"--","Exam","Quiz","Problem Set","Project","HW"};
-        ArrayAdapter<String> assignmentAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, assignmentTypes);
-        assignmentSpinner.setAdapter(assignmentAdapter);
+        CalendarView calendarView = rootView.findViewById(R.id.profCalenderView);
 
-        submitAssignmentButton.setOnClickListener(new View.OnClickListener() {
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onClick(View view) {
-                title = assignmentTitle.getText().toString();
-                additionalInfo = additionalInformation.getText().toString();
+            public void onSelectedDayChange(@NonNull CalendarView view, int y, int m, int d) {
+                year = y;
+                day = d;
+                month = m;
+                date = m+"/"+d+"/"+y;
             }
         });
-
-
-
 
         return rootView;
     }

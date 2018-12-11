@@ -205,6 +205,7 @@ public class ScheduleSessionFragment extends Fragment {
                             }
                             if (mentors.size() > 0 && qualMentors.size() == 0) {
                                 Toast.makeText(getContext(), "There are no mentors who have taken this course working during the time you selected.", Toast.LENGTH_LONG).show();
+                                qualMentors.clear();
                                 avail = false;
                             }
                             if (!qualMentors.isEmpty()){
@@ -230,7 +231,7 @@ public class ScheduleSessionFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
 
