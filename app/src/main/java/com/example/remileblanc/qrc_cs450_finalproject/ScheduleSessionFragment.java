@@ -1,6 +1,7 @@
 package com.example.remileblanc.qrc_cs450_finalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,6 +47,10 @@ public class ScheduleSessionFragment extends Fragment {
     private String professor;
     private ArrayList<String> mentors;
     private ArrayList<String> qualMentors;
+    private int year;
+    private int month;
+    private int dayOfMonth;
+    private boolean avail = false;
 
 
     public ScheduleSessionFragment() {
@@ -77,6 +84,8 @@ public class ScheduleSessionFragment extends Fragment {
         final Button submitButton = rootView.findViewById(R.id.submitButton);
 
 
+
+
         //create a list of items for the spinner.
         String[] professors = new String[]{"--","Maegan Bos", "Jessica Chapman","Dan Cryster","Jim Defranza","Dante Giarusso","Robert Haney","Ed Harcourt", "Natasha Komarov","Choong-Soo Lee","Patti Frazer Lock","Robin Lock","Daniel Look","Duncan Melville", "Ivan Ramler","Michael Schuckers","Lisa Torrey","Other"};
         String[] classes = new String[]{"--","Concepts of Mathematics", "Mathematics and Art","PreCalculus","Calculus 1", "Calculus 2",
@@ -101,23 +110,11 @@ public class ScheduleSessionFragment extends Fragment {
 
         calender.setOnDateChangeListener(new OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-
-
-                month = month+1;
-                // First convert to Date. This is one of the many ways.
-                String dateString = String.format("%d-%d-%d", year, month, dayOfMonth);
-                Date date = null;
-                try {
-                    date = new SimpleDateFormat("yyyy-M-d").parse(dateString);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                // Then get the day of week from the Date based on specific locale.
-                dayOfWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date);
-
-
+            public void onSelectedDayChange(@NonNull CalendarView view, int y, int m, int dofm) {
+                year = y;
+                month = m;
+                dayOfMonth = dofm;
+                getDayOfWeek(year, month, dayOfMonth);
 
             }
         });
@@ -145,69 +142,83 @@ public class ScheduleSessionFragment extends Fragment {
                 mentors = new ArrayList<>();
                 qualMentors = new ArrayList<>();
 
-                // This is the get mentors the work during the selected shift
-                myRef0.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        for(DataSnapshot ds : dataSnapshot.getChildren()){
-                            if(ds.getKey().equals(dayOfWeek)){
-                                for(DataSnapshot dataSnap: ds.getChildren()) {
-                                    if(dataSnap.getKey().equals(shift)){
-                                        for(DataSnapshot dataSnapshot1: dataSnap.getChildren()){
-                                            String mentor = dataSnapshot1.getValue(String.class);
-                                            mentors.add(mentor);
+                int hourOfDay = timePicker.getHour();
+                shift = getShift(hourOfDay);
+                getDayOfWeek(year, month, dayOfMonth);
+
+
+                if (shift.equals("closed")) {
+                    Toast.makeText(getContext(), "The QRC is closed during your selected time.", Toast.LENGTH_LONG).show();
+                } else if (dayOfWeek.equals("Saturday")) {
+                    Toast.makeText(getContext(), "The QRC is closed on Saturdays.", Toast.LENGTH_LONG).show();
+
+                } else {
+                    // This is the get mentors the work during the selected shift
+                    myRef0.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                if (ds.getKey().equals(dayOfWeek)) {
+                                    for (DataSnapshot dataSnap : ds.getChildren()) {
+                                        if (dataSnap.getKey().equals(shift)) {
+                                            for (DataSnapshot dataSnapshot1 : dataSnap.getChildren()) {
+                                                String mentor = dataSnapshot1.getValue(String.class);
+                                                mentors.add(mentor);
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                        for(String m : mentors){
-                            System.out.println("M: "+m);
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            System.out.println("Submit cancelled for some reason");
                         }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        System.out.println("Submit cancelled for some reason");
-                    }
 
-                });
+                    });
 
-                myRef1.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot ds : dataSnapshot.getChildren()){
-                            if(ds.getKey().equals(course)){
-                                for(DataSnapshot dataSnap: ds.getChildren()) {
-                                    if(mentors.contains(dataSnap.getValue(String.class))){
-                                        String qualMentor = dataSnap.getValue(String.class);
-                                        qualMentors.add(qualMentor);
+                    myRef1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                if (ds.getKey().equals(course)) {
+                                    for (DataSnapshot dataSnap : ds.getChildren()) {
+                                        if (mentors.contains(dataSnap.getValue(String.class))) {
+                                            String qualMentor = dataSnap.getValue(String.class);
+                                            qualMentors.add(qualMentor);
+                                        }
                                     }
                                 }
                             }
+                            if (mentors.size() > 0 && qualMentors.size() == 0) {
+                                Toast.makeText(getContext(), "There are no mentors who have taken this course working during the time you selected.", Toast.LENGTH_LONG).show();
+                                avail = false;
+                            }
+                            if (!qualMentors.isEmpty()){
+                                avail = true;
+                            }
+                            getQualMentors();
                         }
-                        if(mentors.size() > 0 && qualMentors.size() == 0){
-                            System.out.println("There are no mentors who have taken this course working during the time you selected.");
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
                         }
-                        for(String m : qualMentors){
-                            System.out.println("QM: "+m);
-                        }
+                    });
+                    if(avail) {
+                        Intent intent = new Intent(getActivity(), SelectMentorActivity.class);
+                        getActivity().startActivity(intent);
                     }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-
+                }
             }
+
         });
 
-
-        return rootView;
+       return rootView;
 
     }
 
@@ -292,6 +303,21 @@ public class ScheduleSessionFragment extends Fragment {
 
 
 
+    public void getDayOfWeek(int year, int month, int dayOfMonth){
+        month = month+1;
+        // First convert to Date. This is one of the many ways.
+        String dateString = String.format("%d-%d-%d", year, month, dayOfMonth);
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-M-d").parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // Then get the day of week from the Date based on specific locale.
+        dayOfWeek = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -307,6 +333,17 @@ public class ScheduleSessionFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void getQualMentors() {
+        //Put the value
+        SelectMentorFragment smf = new SelectMentorFragment();
+        Bundle args = new Bundle();
+        args.putStringArrayList("Qual Mentors", qualMentors);
+        smf.setArguments(args);
+
+        //Inflate the fragment
+        getFragmentManager().beginTransaction().add(R.id.fragment_schedule_session, smf).commit();
     }
 
     public interface OnFragmentInteractionListener {

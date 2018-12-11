@@ -4,12 +4,12 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ScheduleSessionActivity extends AppCompatActivity implements ScheduleSessionFragment.OnFragmentInteractionListener, SelectMentorFragment.OnFragmentInteractionListener {
+public class SelectMentorActivity extends AppCompatActivity implements SelectMentorFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schedule_session);
+        setContentView(R.layout.activity_select_mentor);
     }
 
     @Override
