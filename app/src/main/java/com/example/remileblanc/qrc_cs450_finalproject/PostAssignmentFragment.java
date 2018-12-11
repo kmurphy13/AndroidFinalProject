@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 
 /**
@@ -64,7 +66,13 @@ public class PostAssignmentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_post_assignment, container, false);
+        View rootView =inflater.inflate(R.layout.fragment_post_assignment, container, false);
+
+        Spinner assignmentSpinner = rootView.findViewById(R.id.assignmentSpinner);
+        EditText assignmentTitle = rootView.findViewById(R.id.assignmentTitle);
+        EditText additionalInformation = rootView.findViewById(R.id.additionalInformation);
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

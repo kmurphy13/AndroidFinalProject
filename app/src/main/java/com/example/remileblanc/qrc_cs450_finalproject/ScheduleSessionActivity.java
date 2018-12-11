@@ -4,7 +4,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ScheduleSessionActivity extends AppCompatActivity implements ScheduleSessionFragment.OnFragmentInteractionListener, SelectMentorFragment.OnFragmentInteractionListener {
+public class ScheduleSessionActivity extends AppCompatActivity implements ScheduleSessionFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

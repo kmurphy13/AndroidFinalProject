@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostAssignmentActivity">
+    tools:context=".PostAssignmentActivity"
+    android:background="@color/white">
 
-</android.support.constraint.ConstraintLayout>
+    <fragment
+        android:id="@+id/fragment_postassignment"
+        android:name="com.example.remileblanc.qrc_cs450_finalproject.PostAssignmentFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_post_assignment"/>
+
+
+</FrameLayout>
