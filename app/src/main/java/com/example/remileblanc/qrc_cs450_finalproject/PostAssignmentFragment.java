@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -28,6 +30,9 @@ public class PostAssignmentFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private String title;
+    private String additionalInfo;
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,8 +74,24 @@ public class PostAssignmentFragment extends Fragment {
         View rootView =inflater.inflate(R.layout.fragment_post_assignment, container, false);
 
         Spinner assignmentSpinner = rootView.findViewById(R.id.assignmentSpinner);
-        EditText assignmentTitle = rootView.findViewById(R.id.assignmentTitle);
-        EditText additionalInformation = rootView.findViewById(R.id.additionalInformation);
+        final EditText assignmentTitle = rootView.findViewById(R.id.assignmentTitle);
+        final EditText additionalInformation = rootView.findViewById(R.id.additionalInformation);
+        Button submitAssignmentButton = rootView.findViewById(R.id.submitAssignmentButton);
+
+        String[] assignmentTypes = new String[]{"--","Exam","Quiz","Problem Set","Project","HW"};
+        ArrayAdapter<String> assignmentAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, assignmentTypes);
+        assignmentSpinner.setAdapter(assignmentAdapter);
+
+        submitAssignmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                title = assignmentTitle.getText().toString();
+                additionalInfo = additionalInformation.getText().toString();
+            }
+        });
+
+
+
 
         return rootView;
     }
