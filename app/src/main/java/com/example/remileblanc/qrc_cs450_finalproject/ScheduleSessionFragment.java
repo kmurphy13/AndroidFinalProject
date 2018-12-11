@@ -21,6 +21,7 @@ import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -81,9 +82,14 @@ public class ScheduleSessionFragment extends Fragment {
         final Spinner professorSpinner = rootView.findViewById(R.id.professorSpinner);
         final CalendarView calender = rootView.findViewById(R.id.calenderView);
         final TimePicker timePicker = rootView.findViewById(R.id.timePicker);
+        final Button viewMentorButton = rootView.findViewById(R.id.viewMentorsButton);
+        final TextView selectMentorText = rootView.findViewById(R.id.selectMentorText);
+        final Spinner selectMentorSpinner = rootView.findViewById(R.id.selectMentorSpinner);
         final Button submitButton = rootView.findViewById(R.id.submitButton);
 
-
+        selectMentorText.setVisibility(View.INVISIBLE);
+        selectMentorSpinner.setVisibility(View.INVISIBLE);
+        submitButton.setVisibility(View.INVISIBLE);
 
 
         //create a list of items for the spinner.
@@ -128,9 +134,12 @@ public class ScheduleSessionFragment extends Fragment {
             }
         });
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        viewMentorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                selectMentorSpinner.setVisibility(View.VISIBLE);
+                selectMentorText.setVisibility(View.VISIBLE);
+                submitButton.setVisibility(View.VISIBLE);
 
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef0 = database.getReference("Schedule");
@@ -201,7 +210,11 @@ public class ScheduleSessionFragment extends Fragment {
                             if (!qualMentors.isEmpty()){
                                 avail = true;
                             }
-                            getQualMentors();
+                            if(avail) {
+                                qualMentors.add(0, "--");
+                                ArrayAdapter<String> mentorAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, qualMentors);
+                                selectMentorSpinner.setAdapter(mentorAdapter);
+                            }
                         }
 
                         @Override
@@ -209,16 +222,20 @@ public class ScheduleSessionFragment extends Fragment {
 
                         }
                     });
-                    if(avail) {
-                        Intent intent = new Intent(getActivity(), SelectMentorActivity.class);
-                        getActivity().startActivity(intent);
-                    }
                 }
             }
 
         });
 
-       return rootView;
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+
+
+        return rootView;
 
     }
 
@@ -335,16 +352,6 @@ public class ScheduleSessionFragment extends Fragment {
         mListener = null;
     }
 
-    public void getQualMentors() {
-        //Put the value
-        SelectMentorFragment smf = new SelectMentorFragment();
-        Bundle args = new Bundle();
-        args.putStringArrayList("Qual Mentors", qualMentors);
-        smf.setArguments(args);
-
-        //Inflate the fragment
-        getFragmentManager().beginTransaction().add(R.id.fragment_schedule_session, smf).commit();
-    }
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
