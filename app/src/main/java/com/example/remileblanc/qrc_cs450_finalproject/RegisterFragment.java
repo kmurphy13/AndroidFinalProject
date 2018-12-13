@@ -100,8 +100,7 @@ public class RegisterFragment extends Fragment {
 
                 userType = ((RegisterActivity) getActivity()).getUserType();
 
-
-                if(email == null || password == null || firstName == null|| lastName == null || userType == null){
+                if(email.equals("") || password.equals("") || firstName.equals("") || lastName.equals("") || userType == null){
                     Toast.makeText(getContext(), "Please enter all required fields", Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -225,7 +224,7 @@ public class RegisterFragment extends Fragment {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(getContext(), "Cannont create new account.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Cannot create new account.", Toast.LENGTH_LONG).show();
                 }
             }
         });

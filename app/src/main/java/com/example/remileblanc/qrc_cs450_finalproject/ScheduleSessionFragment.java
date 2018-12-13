@@ -1,6 +1,7 @@
 package com.example.remileblanc.qrc_cs450_finalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -49,6 +51,7 @@ public class ScheduleSessionFragment extends Fragment {
     private int month;
     private int dayOfMonth;
     private boolean avail = false;
+    private boolean here = false;
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -130,6 +133,7 @@ public class ScheduleSessionFragment extends Fragment {
                 selectMentorText.setVisibility(View.INVISIBLE);
                 selectMentorSpinner.setVisibility(View.INVISIBLE);
                 submitButton.setVisibility(View.INVISIBLE);
+                here = true;
 
             }
         });
@@ -163,9 +167,18 @@ public class ScheduleSessionFragment extends Fragment {
                 qualMentors = new ArrayList<>();
 
 
-                int hourOfDay = timePicker.getHour();
-                shift = getShift(hourOfDay);
-                getDayOfWeek(year, month, dayOfMonth);
+                hour = timePicker.getHour();
+                min = timePicker.getMinute();
+                shift = getShift(hour);
+                if(here) {
+                    getDayOfWeek(year, month, dayOfMonth);
+                } else {
+                    Calendar c = Calendar.getInstance();
+                    year = c.get(Calendar.YEAR);
+                    month = c.get(Calendar.MONTH);
+                    dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+                    getDayOfWeek(year, month, dayOfMonth);
+                }
 
 
                 if (shift.equals("closed")) {
@@ -214,13 +227,18 @@ public class ScheduleSessionFragment extends Fragment {
                                     }
                                 }
                             }
-                            if (mentors.size() > 0 && qualMentors.size() == 0) {
+                            if(course.equals("--")){
+                                Toast.makeText(getContext(), "Please select the course you wish to schedule a session for.", Toast.LENGTH_LONG).show();
+                                avail = false;
+                            } else if(professor.equals("--")){
+                                Toast.makeText(getContext(), "Please select the professor of the course you wish to schedule a session for.", Toast.LENGTH_LONG).show();
+                                avail = false;
+                            } else if (mentors.size() > 0 && qualMentors.size() == 0) {
                                 Toast.makeText(getContext(), "There are no mentors who have taken this course working during the time you selected.", Toast.LENGTH_LONG).show();
                                 ArrayAdapter<String> mentorAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, qualMentors);
                                 selectMentorSpinner.setAdapter(mentorAdapter);
                                 avail = false;
-                            }
-                            if (!qualMentors.isEmpty()){
+                            } else if (!qualMentors.isEmpty()){
                                 avail = true;
                             }
                             if(avail) {
@@ -254,7 +272,15 @@ public class ScheduleSessionFragment extends Fragment {
                     //----------------- getting student name is still nto working --------------
 
                     month = month +1;
-                    final String date = dayOfWeek+", "+ month+"-"+dayOfMonth+"-"+year;
+                    final String date;
+                    if(dayOfMonth<10){
+                        String dom = String.valueOf(dayOfMonth);
+                        dom = "0"+dom;
+                        date = dayOfWeek+", "+ month+"-"+dom+"-"+year;
+
+                    } else {
+                        date = dayOfWeek + ", " + month + "-" + dayOfMonth + "-" + year;
+                    }
                     final String time;
                     if(min<10){
                         String m = String.valueOf(min);
@@ -288,6 +314,8 @@ public class ScheduleSessionFragment extends Fragment {
                     });
 
                     Toast.makeText(getContext(), "You have successfully scheduled a session on "+date+ " with "+ mentor+".", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getActivity(), StudentActivity.class);
+                    getActivity().startActivity(intent);
                 }
             }
         });
