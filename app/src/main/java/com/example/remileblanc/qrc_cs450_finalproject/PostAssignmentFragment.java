@@ -118,8 +118,8 @@ public class PostAssignmentFragment extends Fragment {
             public void onSelectedDayChange(@NonNull CalendarView view, int y, int m, int d) {
                 year = y;
                 day = d;
-                month = m;
-                date = m+"/"+d+"/"+y;
+                month = m+1;
+                date = m+"-"+d+"-"+y;
             }
         });
 

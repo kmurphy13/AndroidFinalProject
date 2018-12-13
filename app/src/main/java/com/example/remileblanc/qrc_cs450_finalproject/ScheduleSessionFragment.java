@@ -5,13 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +16,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
-import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -52,6 +51,14 @@ public class ScheduleSessionFragment extends Fragment {
     private int month;
     private int dayOfMonth;
     private boolean avail = false;
+    private boolean here = false;
+
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private String student;
+    private int hour;
+    private int min;
 
 
     public ScheduleSessionFragment() {
@@ -59,7 +66,6 @@ public class ScheduleSessionFragment extends Fragment {
     }
 
 
-    // TODO: Rename and change types and number of parameters
     public static ScheduleSessionFragment newInstance(String param1, String param2) {
         ScheduleSessionFragment fragment = new ScheduleSessionFragment();
         return fragment;
@@ -68,6 +74,9 @@ public class ScheduleSessionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
 
     }
 
@@ -107,7 +116,7 @@ public class ScheduleSessionFragment extends Fragment {
                 "Intro to Chem","Intro to Psych","Intro to Philosophy", "Reasoning"};
 
 
-        ArrayAdapter<String> professorAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, professors);
+        final ArrayAdapter<String> professorAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, professors);
         ArrayAdapter<String> classAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,classes);
 
         professorSpinner.setAdapter(professorAdapter);
@@ -121,6 +130,10 @@ public class ScheduleSessionFragment extends Fragment {
                 month = m;
                 dayOfMonth = dofm;
                 getDayOfWeek(year, month, dayOfMonth);
+                selectMentorText.setVisibility(View.INVISIBLE);
+                selectMentorSpinner.setVisibility(View.INVISIBLE);
+                submitButton.setVisibility(View.INVISIBLE);
+                here = true;
 
             }
         });
@@ -130,6 +143,11 @@ public class ScheduleSessionFragment extends Fragment {
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 
                 shift = getShift(hourOfDay);
+                hour = hourOfDay;
+                min = minute;
+                selectMentorText.setVisibility(View.INVISIBLE);
+                selectMentorSpinner.setVisibility(View.INVISIBLE);
+                submitButton.setVisibility(View.INVISIBLE);
 
             }
         });
@@ -137,9 +155,6 @@ public class ScheduleSessionFragment extends Fragment {
         viewMentorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectMentorSpinner.setVisibility(View.VISIBLE);
-                selectMentorText.setVisibility(View.VISIBLE);
-                submitButton.setVisibility(View.VISIBLE);
 
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef0 = database.getReference("Schedule");
@@ -152,9 +167,18 @@ public class ScheduleSessionFragment extends Fragment {
                 qualMentors = new ArrayList<>();
 
 
-                int hourOfDay = timePicker.getHour();
-                shift = getShift(hourOfDay);
-                getDayOfWeek(year, month, dayOfMonth);
+                hour = timePicker.getHour();
+                min = timePicker.getMinute();
+                shift = getShift(hour);
+                if(here) {
+                    getDayOfWeek(year, month, dayOfMonth);
+                } else {
+                    Calendar c = Calendar.getInstance();
+                    year = c.get(Calendar.YEAR);
+                    month = c.get(Calendar.MONTH);
+                    dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+                    getDayOfWeek(year, month, dayOfMonth);
+                }
 
 
                 if (shift.equals("closed")) {
@@ -203,15 +227,24 @@ public class ScheduleSessionFragment extends Fragment {
                                     }
                                 }
                             }
-                            if (mentors.size() > 0 && qualMentors.size() == 0) {
-                                Toast.makeText(getContext(), "There are no mentors who have taken this course working during the time you selected.", Toast.LENGTH_LONG).show();
-                                qualMentors.clear();
+                            if(course.equals("--")){
+                                Toast.makeText(getContext(), "Please select the course you wish to schedule a session for.", Toast.LENGTH_LONG).show();
                                 avail = false;
-                            }
-                            if (!qualMentors.isEmpty()){
+                            } else if(professor.equals("--")){
+                                Toast.makeText(getContext(), "Please select the professor of the course you wish to schedule a session for.", Toast.LENGTH_LONG).show();
+                                avail = false;
+                            } else if (mentors.size() > 0 && qualMentors.size() == 0) {
+                                Toast.makeText(getContext(), "There are no mentors who have taken this course working during the time you selected.", Toast.LENGTH_LONG).show();
+                                ArrayAdapter<String> mentorAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, qualMentors);
+                                selectMentorSpinner.setAdapter(mentorAdapter);
+                                avail = false;
+                            } else if (!qualMentors.isEmpty()){
                                 avail = true;
                             }
                             if(avail) {
+                                selectMentorSpinner.setVisibility(View.VISIBLE);
+                                selectMentorText.setVisibility(View.VISIBLE);
+                                submitButton.setVisibility(View.VISIBLE);
                                 qualMentors.add(0, "--");
                                 ArrayAdapter<String> mentorAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, qualMentors);
                                 selectMentorSpinner.setAdapter(mentorAdapter);
@@ -231,13 +264,70 @@ public class ScheduleSessionFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(selectMentorSpinner.getSelectedItem().equals("--") || selectMentorSpinner.getSelectedItem() == null){
+                    Toast.makeText(getContext(), "Please select a mentor.", Toast.LENGTH_LONG).show();
+                } else {
 
+
+                    //----------------- getting student name is still nto working --------------
+
+                    month = month +1;
+                    final String date;
+                    if(dayOfMonth<10){
+                        String dom = String.valueOf(dayOfMonth);
+                        dom = "0"+dom;
+                        date = dayOfWeek+", "+ month+"-"+dom+"-"+year;
+
+                    } else {
+                        date = dayOfWeek + ", " + month + "-" + dayOfMonth + "-" + year;
+                    }
+                    final String time;
+                    if(min<10){
+                        String m = String.valueOf(min);
+                        m = "0"+m;
+                        time = hour+":"+m;
+                    } else {
+                        time = hour+":"+min;
+                    }
+
+                    final String mentor = selectMentorSpinner.getSelectedItem().toString();
+                    course = classSpinner.getSelectedItem().toString();
+                    professor = professorSpinner.getSelectedItem().toString();
+
+
+                    final DatabaseReference users = database.getReference("users");
+                    final FirebaseUser specificUser = mAuth.getCurrentUser();
+                    users.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for(DataSnapshot ds : dataSnapshot.getChildren()){
+                                if(ds.getKey().equals(specificUser.getUid())){
+                                    student = ds.child("firstName").getValue() + " " + ds.child("lastName").getValue();
+                                }
+                            }
+                            writeNewSession(mentor, student, course, professor, date, time);
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    Toast.makeText(getContext(), "You have successfully scheduled a session on "+date+ " with "+ mentor+".", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getActivity(), StudentActivity.class);
+                    getActivity().startActivity(intent);
+                }
             }
         });
 
 
         return rootView;
 
+    }
+
+    public void writeNewSession(String aMentor, String aStudent ,String aCourse, String aProfessor, String aDate, String aTime) {
+        ScheduleSession session = new ScheduleSession(aMentor, aStudent, aCourse, aProfessor,aDate, aTime);
+        mDatabase.child("Mentor Sessions").child(aMentor).child(aDate).setValue(session);
     }
 
     public String getShift(int hour){
@@ -318,8 +408,6 @@ public class ScheduleSessionFragment extends Fragment {
         }
         return shift;
     }
-
-
 
     public void getDayOfWeek(int year, int month, int dayOfMonth){
         month = month+1;

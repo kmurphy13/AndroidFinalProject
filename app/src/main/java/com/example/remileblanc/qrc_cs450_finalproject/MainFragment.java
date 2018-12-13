@@ -108,7 +108,13 @@ public class MainFragment extends Fragment {
 
                 enterPassword = rootView.findViewById(R.id.enterPassword);
                 stringPassword = enterPassword.getText().toString();
-                signIn(stringEmail, stringPassword);
+                if(stringEmail == null || stringEmail.equals("")){
+                    Toast.makeText(getContext(), "Please enter your email.",Toast.LENGTH_SHORT).show();
+                } else if (stringPassword == null || stringPassword.equals("")){
+                    Toast.makeText(getContext(), "Please enter your password.",Toast.LENGTH_SHORT).show();
+                } else {
+                    signIn(stringEmail, stringPassword);
+                }
             }
         });
 
