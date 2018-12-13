@@ -8,9 +8,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
 
 
 /**
@@ -35,8 +47,16 @@ public class PostAssignmentFragment extends Fragment {
     private int day;
     private int month;
     private String date;
+    private String title;
+    private String additionalInfoString;
+    private String assignmentType;
+    private String userName;
 
     private OnFragmentInteractionListener mListener;
+
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
 
     public PostAssignmentFragment() {
         // Required empty public constructor
@@ -67,6 +87,9 @@ public class PostAssignmentFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
     }
 
     @Override
@@ -75,11 +98,20 @@ public class PostAssignmentFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView =inflater.inflate(R.layout.fragment_post_assignment, container, false);
 
-        Spinner assignmentSpinner = rootView.findViewById(R.id.assignmentSpinner);
-        EditText assignmentTitle = rootView.findViewById(R.id.assignmentTitle);
-        EditText additionalInformation = rootView.findViewById(R.id.additionalInformation);
+        getName(mAuth.getCurrentUser());
 
+        final Spinner assignmentSpinner = rootView.findViewById(R.id.assignmentSpinner);
+        final EditText assignmentTitle = rootView.findViewById(R.id.assignmentTitle);
+        final EditText additionalInformation = rootView.findViewById(R.id.additionalInformation);
         CalendarView calendarView = rootView.findViewById(R.id.profCalenderView);
+        Button submitAssignment = rootView.findViewById(R.id.submitAssignmentButton);
+
+        String[] classes = new String[]{"--","Exam","Quiz","Problem Set","Project","HW","Other"};
+
+
+        ArrayAdapter<String> assignmentAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, classes);
+        assignmentSpinner.setAdapter(assignmentAdapter);
+
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -91,7 +123,43 @@ public class PostAssignmentFragment extends Fragment {
             }
         });
 
+        submitAssignment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                assignmentType = assignmentSpinner.getSelectedItem().toString();
+                title = assignmentTitle.getText().toString();
+                additionalInfoString = additionalInformation.getText().toString();
+                writeNewAssignment(userName,assignmentType,title,date,additionalInfoString);
+            }
+        });
+
+
+
         return rootView;
+    }
+
+    public void writeNewAssignment(String aProfessor,String aType, String aTitle, String aDate, String aAdditionalInfo) {
+        Assignment assignment = new Assignment(aProfessor,aType,aTitle,aDate,aAdditionalInfo);
+        mDatabase.child("assignments").child(aProfessor).child(aTitle).setValue(assignment);
+    }
+
+    public void getName(final FirebaseUser specificUser){
+        final DatabaseReference users = database.getReference("users");
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    if(ds.getKey().equals(specificUser.getUid())){
+                        userName = ds.child("firstName").getValue() + " " + ds.child("lastName").getValue();
+                        System.out.println(userName);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

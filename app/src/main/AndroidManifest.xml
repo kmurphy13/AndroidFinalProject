@@ -23,7 +23,8 @@
         <activity android:name=".StudyCornerActivity" />
         <activity android:name=".CheckInActivity" />
         <activity android:name=".ProfessorActivity" />
-        <activity android:name=".StudentUsageActivity"></activity>
+        <activity android:name=".StudentUsageActivity"/>
+        <activity android:name=".PostAssignmentActivity"/>
     </application>
 
 </manifest>

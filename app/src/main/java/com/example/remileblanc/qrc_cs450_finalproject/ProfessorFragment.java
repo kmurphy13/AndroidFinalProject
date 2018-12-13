@@ -90,7 +90,8 @@ public class ProfessorFragment extends Fragment{
         postAssignmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getActivity(), PostAssignmentActivity.class);
+                getActivity().startActivity(intent);
             }
         });
 

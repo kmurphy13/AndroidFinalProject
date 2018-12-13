@@ -1,102 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostAssignmentFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".PostAssignmentFragment">
 
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Post an Assignment"
-        android:textAlignment="center"
-        android:textSize="60sp"
-        android:fontFamily="@font/latolight"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:text="What type of assignment is this?"
-        android:fontFamily="@font/latolight"/>
-
-    <Spinner
-        android:id="@+id/assignmentSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="What is the title of the Assignment?"
-        android:textAlignment="center"
-        android:fontFamily="@font/latolight"
-        android:textSize="20sp"/>
-
-    <EditText
-        android:id="@+id/assignmentTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:hint="Title of Assignment"
-        android:fontFamily="@font/latolight"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:fontFamily="@font/latolight"
-        android:text="When is this due or when is the test date?"/>
-
-    <CalendarView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/profCalenderView">
-    </CalendarView>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="Is there any additional information you would like to include?"
-        android:textAlignment="center"
-        android:fontFamily="@font/latolight"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/latolight"
+            android:text="Post an Assignment"
+            android:textAlignment="center"
+            android:textSize="60sp" />
 
-    <EditText
-        android:id="@+id/additionalInformation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:hint="Additional Information"
-        android:fontFamily="@font/latolight"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/latolight"
+            android:text="What type of assignment is this?"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/assignmentSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/latolight"
+            android:text="What is the title of the Assignment?"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/assignmentTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/latolight"
+            android:hint="Title of Assignment"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/latolight"
+            android:text="When is this due or when is the test date?"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <CalendarView
+            android:id="@+id/profCalenderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"></CalendarView>
 
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/latolight"
+            android:text="Is there any additional information you would like to include?"
+            android:textAlignment="center"
+            android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/submitAssignmentButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:padding="15dp"
-        android:text="Submit"
-        android:layout_gravity="center"
-        android:background="@drawable/rounded_button"/>
+        <EditText
+            android:id="@+id/additionalInformation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/latolight"
+            android:hint="Additional Information"
+            android:textSize="20sp" />
 
-</LinearLayout>
+
+        <Button
+            android:id="@+id/submitAssignmentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_button"
+            android:padding="15dp"
+            android:layout_marginBottom="20dp"
+            android:text="Submit"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+</ScrollView>
