@@ -1,6 +1,7 @@
 package com.example.remileblanc.qrc_cs450_finalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -130,6 +132,10 @@ public class PostAssignmentFragment extends Fragment {
                 title = assignmentTitle.getText().toString();
                 additionalInfoString = additionalInformation.getText().toString();
                 writeNewAssignment(userName,assignmentType,title,date,additionalInfoString);
+
+                Toast.makeText(getContext(), "You have successfully posted your "+ title+", that is due on "+date, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(), ProfessorActivity.class);
+                getActivity().startActivity(intent);
             }
         });
 
