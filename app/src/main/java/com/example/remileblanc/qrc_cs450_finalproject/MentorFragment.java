@@ -79,10 +79,9 @@ public class MentorFragment extends Fragment {
                                         String prof = day.child("professor").getValue().toString();
                                         String course = day.child("course").getValue().toString();
                                         String student = day.child("name").getValue().toString();
-                                        data = data+"- You have a scheduled session on " + date + " at " + time + " with " + student + " who is looking for help in " + course + ", and is taking it with " + prof + ".\n\n";
-
+                                        data = data + "- You have a scheduled session on " + date + " at " + time + " with " + student + " who is looking for help in " + course + ", and is taking it with " + prof + ".\n\n";
                                     }
-                                    data = data.substring(0,data.length()-2);
+                                    data = data.substring(0, data.length()-2);
                                     sessionsData.append(data);
                                 }
                             }

@@ -48,11 +48,12 @@ public class PostAssignmentFragment extends Fragment {
     private int year;
     private int day;
     private int month;
-    private String date;
+    private String date = "";
     private String title;
     private String additionalInfoString;
     private String assignmentType;
     private String userName;
+    private String course;
 
     private OnFragmentInteractionListener mListener;
 
@@ -103,16 +104,30 @@ public class PostAssignmentFragment extends Fragment {
         getName(mAuth.getCurrentUser());
 
         final Spinner assignmentSpinner = rootView.findViewById(R.id.assignmentSpinner);
+        final Spinner courseSpinner = rootView.findViewById(R.id.courseSpinner);
         final EditText assignmentTitle = rootView.findViewById(R.id.assignmentTitle);
         final EditText additionalInformation = rootView.findViewById(R.id.additionalInformation);
         CalendarView calendarView = rootView.findViewById(R.id.profCalenderView);
         Button submitAssignment = rootView.findViewById(R.id.submitAssignmentButton);
 
-        String[] classes = new String[]{"--","Exam","Quiz","Problem Set","Project","HW","Other"};
+        String[] assignments = new String[]{"--","Exam","Quiz","Problem Set","Project","HW","Other"};
+        String[] courses = new String[]{"--","Concepts of Mathematics", "Mathematics and Art","PreCalculus","Calculus 1", "Calculus 2",
+                "Multivariable Calculus","Vector Calculus","Differential Equations", "Linear Algebra", "Mathematical Problem Solving",
+                "Bridge to Higher Math", "Symbolic Logic","Real Analysis", "Complex Analysis","Ring Theory", "Group Theory", "Graph Theory",
+                "Geometry","Financial Mathematics","History of Mathematics","Probability", "Mathematical Methods of Physics", "Number Theory",
+                "Topology","Theory of Computation","Applied Statistics","Statistical Computing", "Applied Regression Analysis",
+                "Statistical Methods of Data Collection","Topics in Statistical Learning", "Mathematical Statistics","Econometrics",
+                "Time Series Analysis","Time Series Analysis","Intro to CS", "Techniques of Computer Science","Computer Organization",
+                "Data Structures","Computer Networking", "Web Programming","Software Engineering","Database Systems","Algorithm Analysis",
+                "Programming Analysis", "Operating Systems","Artificial Intelligence","Theory of Computation","Intro to Economics",
+                "Microeconomics", "Macroeconomics", "Quantitative Methods","Financial Accounting","Intro to Physics","Intro to Bio",
+                "Intro to Chem","Intro to Psych","Intro to Philosophy", "Reasoning"};
 
-
-        ArrayAdapter<String> assignmentAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, classes);
+        ArrayAdapter<String> assignmentAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, assignments);
         assignmentSpinner.setAdapter(assignmentAdapter);
+
+        ArrayAdapter<String> courseAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, courses);
+        courseSpinner.setAdapter(courseAdapter);
 
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -121,21 +136,35 @@ public class PostAssignmentFragment extends Fragment {
                 year = y;
                 day = d;
                 month = m+1;
-                date = m+"-"+d+"-"+y;
+                date = month+"-"+day+"-"+year;
             }
         });
 
         submitAssignment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                course = courseSpinner.getSelectedItem().toString();
                 assignmentType = assignmentSpinner.getSelectedItem().toString();
                 title = assignmentTitle.getText().toString();
                 additionalInfoString = additionalInformation.getText().toString();
-                writeNewAssignment(userName,assignmentType,title,date,additionalInfoString);
+                if(date.equals("")){
+                    Calendar c = Calendar.getInstance();
+                    year = c.get(Calendar.YEAR);
+                    month = c.get(Calendar.MONTH);
+                    month = month+1;
+                    day = c.get(Calendar.DAY_OF_MONTH);
+                    date = month+"-"+day+"-"+year;
+                }
+                if(course.equals("--") || assignmentType.equals("--") || title.equals("") || additionalInfoString.equals("")){
+                    Toast.makeText(getContext(), "Please enter all the required fields.", Toast.LENGTH_LONG).show();
+                } else {
+                    writeNewAssignment(course, userName, assignmentType, title, date, additionalInfoString);
+                    Toast.makeText(getContext(), "You have successfully posted your "+ title+", that is due on "+date, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getActivity(), ProfessorActivity.class);
+                    getActivity().startActivity(intent);
+                }
 
-                Toast.makeText(getContext(), "You have successfully posted your "+ title+", that is due on "+date, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getActivity(), ProfessorActivity.class);
-                getActivity().startActivity(intent);
+
             }
         });
 
@@ -144,9 +173,9 @@ public class PostAssignmentFragment extends Fragment {
         return rootView;
     }
 
-    public void writeNewAssignment(String aProfessor,String aType, String aTitle, String aDate, String aAdditionalInfo) {
-        Assignment assignment = new Assignment(aProfessor,aType,aTitle,aDate,aAdditionalInfo);
-        mDatabase.child("assignments").child(aProfessor).child(aTitle).setValue(assignment);
+    public void writeNewAssignment(String aCourse, String aProfessor,String aType, String aTitle, String aDate, String aAdditionalInfo) {
+        Assignment assignment = new Assignment(aCourse, aProfessor,aType,aTitle,aDate,aAdditionalInfo);
+        mDatabase.child("assignments").child(aCourse).child(aProfessor).child(aTitle).setValue(assignment);
     }
 
     public void getName(final FirebaseUser specificUser){
