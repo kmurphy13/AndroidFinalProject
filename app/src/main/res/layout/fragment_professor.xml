@@ -19,13 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-
         android:background="@drawable/rounded_button"
         android:fontFamily="@font/latolight"
         android:padding="10dp"
         android:text="View students who have checked in to the QRC"
         android:textSize="20sp"
         />
+
     <Button
         android:id="@+id/postAssignmentButton"
         android:layout_width="match_parent"
@@ -35,6 +35,28 @@
         android:fontFamily="@font/latolight"
         android:padding="10dp"
         android:text="Post an Exam, Quiz, or Assignment"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/postEventButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_button"
+        android:fontFamily="@font/latolight"
+        android:padding="10dp"
+        android:text="Post an Event"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/viewEventButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_button"
+        android:fontFamily="@font/latolight"
+        android:padding="10dp"
+        android:text="View Events"
         android:textSize="20sp"/>
 
     <ImageView

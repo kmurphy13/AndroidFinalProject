@@ -61,6 +61,7 @@ public class StudentFragment extends Fragment {
         Button b_checkIn = rootView.findViewById(R.id.CheckInToQRCButton);
         Button b_writeEvaluation = rootView.findViewById(R.id.WriteEvaluationButton);
         Button b_studyCorner = rootView.findViewById(R.id.StudyCornerButton);
+        Button viewEventButton = rootView.findViewById(R.id.viewEventButton);
         tv_helloStudent = rootView.findViewById(R.id.HelloStudent);
 
 
@@ -101,6 +102,13 @@ public class StudentFragment extends Fragment {
             }
         });
 
+        viewEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ViewEventActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
         return rootView;
 

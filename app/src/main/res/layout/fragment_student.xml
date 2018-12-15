@@ -64,6 +64,17 @@
         android:layout_margin="20dp"
         android:fontFamily="@font/latolight"/>
 
+    <Button
+        android:id="@+id/viewEventButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="View Events"
+        android:background="@drawable/rounded_button"
+        android:padding="10dp"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/latolight"/>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

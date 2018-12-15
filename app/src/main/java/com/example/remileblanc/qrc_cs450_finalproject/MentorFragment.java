@@ -24,6 +24,8 @@ public class MentorFragment extends Fragment {
     private MentorFragment.OnFragmentInteractionListener mListener;
 
     private Button viewSessionsButton;
+    private Button postEventButton;
+    private Button viewEventButton;
     private String userName;
     private TextView mentorGreeting;
     private TextView sessionsData;
@@ -54,9 +56,27 @@ public class MentorFragment extends Fragment {
         mentorGreeting = rootView.findViewById(R.id.mentorGreeting);
         viewSessionsButton = rootView.findViewById(R.id.viewSessionsButton);
         sessionsData = rootView.findViewById(R.id.sessionsData);
+        viewEventButton = rootView.findViewById(R.id.viewEventButton);
+        postEventButton = rootView.findViewById(R.id.postEventButton);
 
         getName(mAuth.getCurrentUser());
         sessionsData.setVisibility(View.INVISIBLE);
+
+        viewEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ViewEventActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        postEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PostEventActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
         viewSessionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +112,7 @@ public class MentorFragment extends Fragment {
                         } else if(!clicked){
                             viewSessionsButton.setText("View Scheduled Sessions");
                             sessionsData.setVisibility(View.INVISIBLE);
+                            sessionsData.setText("");
                             clicked = true;
                         }
                     }
