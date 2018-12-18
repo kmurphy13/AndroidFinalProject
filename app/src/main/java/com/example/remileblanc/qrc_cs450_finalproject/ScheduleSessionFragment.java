@@ -268,9 +268,6 @@ public class ScheduleSessionFragment extends Fragment {
                     Toast.makeText(getContext(), "Please select a mentor.", Toast.LENGTH_LONG).show();
                 } else {
 
-
-                    //----------------- getting student name is still nto working --------------
-
                     month = month +1;
                     final String date;
                     if(dayOfMonth<10){

@@ -28,6 +28,7 @@
         android:padding="10dp"
         android:text="Post an Event"
         android:textSize="20sp"
+        android:layout_margin="20dp"
         android:layout_marginBottom="20dp"/>
 
     <Button
@@ -42,6 +43,7 @@
         android:padding="10dp"
         android:text="View Events"
         android:textSize="20sp"
+        android:layout_margin="20dp"
         android:layout_marginBottom="20dp"/>
 
     <Button
@@ -56,6 +58,7 @@
         android:padding="10dp"
         android:text="View Scheduled Sessions"
         android:textSize="20sp"
+        android:layout_margin="20dp"
         android:layout_marginBottom="20dp"/>
 
     <ScrollView
