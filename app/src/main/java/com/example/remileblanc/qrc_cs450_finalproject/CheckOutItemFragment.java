@@ -1,36 +1,36 @@
 package com.example.remileblanc.qrc_cs450_finalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
-import android.net.wifi.hotspot2.pps.Credential;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link StudentUsageFragment.OnFragmentInteractionListener} interface
+ * {@link CheckOutItemFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link StudentUsageFragment#newInstance} factory method to
+ * Use the {@link CheckOutItemFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudentUsageFragment extends Fragment {
+public class CheckOutItemFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,22 +40,13 @@ public class StudentUsageFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
-
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
 
-    private ScrollView studentUsageScrollView;
-    private TextView studentUsageData;
-    private TextView totalVisits;
+    private OnFragmentInteractionListener mListener;
 
-
-
-    FirebaseUser currentUser;
-    private String userName;
-
-    public StudentUsageFragment() {
+    public CheckOutItemFragment() {
         // Required empty public constructor
     }
 
@@ -65,14 +56,12 @@ public class StudentUsageFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentUsageFragment.
+     * @return A new instance of fragment CheckOutItemFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StudentUsageFragment newInstance(String param1, String param2) {
-        StudentUsageFragment fragment = new StudentUsageFragment();
+    public static CheckOutItemFragment newInstance(String param1, String param2) {
+        CheckOutItemFragment fragment = new CheckOutItemFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -80,52 +69,35 @@ public class StudentUsageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_check_out_item, container, false);
+        final Spinner checkOutItemSpinner = rootView.findViewById(R.id.checkOutItemSpinner);
+        Button submitCheckOut = rootView.findViewById(R.id.submitCheckOutButton);
+        final EditText additionalInfo = rootView.findViewById(R.id.checkOutItemInformation);
+        final EditText SLUid = rootView.findViewById(R.id.checkOutItemSLUID);
 
-        final View rootView = inflater.inflate(R.layout.fragment_student_usage, container, false);
+        String[] items = new String[]{"--","Calculator","Textbook"};
+        ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
+        checkOutItemSpinner.setAdapter(itemAdapter);
 
-        studentUsageScrollView = rootView.findViewById(R.id.studentUsageScrollView);
-        studentUsageData = rootView.findViewById(R.id.studentUsageData);
-        totalVisits = rootView.findViewById(R.id.totalVisits);
-
-        currentUser = mAuth.getCurrentUser();
-        getName(currentUser);
-
-
-
-        DatabaseReference checkIns = database.getReference("checkIns");
-        checkIns.addListenerForSingleValueEvent(new ValueEventListener() {
+        submitCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int count = 1;
-                for(DataSnapshot course : dataSnapshot.getChildren()){
-                    for(DataSnapshot time : course.getChildren()){
-                        if((time.child("professor").getValue()).equals(userName)){
-                            String specificDate = time.getKey().substring(0,10);
-                            String specificTime = time.getKey().substring(11,16);
-                            String data ="- "+time.child("name").getValue()+" came to the QRC on "+specificDate+" at "+specificTime+" for "+time.child("course").getValue()+".";
-                            studentUsageData.append(data);
-                            studentUsageData.append("\n\n");
-                            count ++;
-
-                        }
-                    }
-                }
-                totalVisits.setText("Total Visits for your Students: "+(count-1));
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onClick(View view) {
+                String ID = SLUid.getText().toString();
+                String additionalInformation = additionalInfo.getText().toString();
+                String item = checkOutItemSpinner.getSelectedItem().toString();
+                checkOutItem(item, additionalInformation,ID);
+                Toast.makeText(getContext(), "You have successfully checked out this item.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(), MentorActivity.class);
+                getActivity().startActivity(intent);
             }
         });
 
@@ -133,22 +105,9 @@ public class StudentUsageFragment extends Fragment {
         return rootView;
     }
 
-    public void getName(final FirebaseUser specificUser){
-        final DatabaseReference users = database.getReference("users");
-        users.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    if(ds.getKey().equals(specificUser.getUid())){
-                        userName = ds.child("firstName").getValue() + " " + ds.child("lastName").getValue();
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    public void checkOutItem(String anItem, String anAdditionalInformation, String anID) {
+        CheckOutItem checkOut = new CheckOutItem(anItem, anAdditionalInformation, anID);
+        mDatabase.child("checkedOutItems").child(anItem).child(anID).setValue(checkOut);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

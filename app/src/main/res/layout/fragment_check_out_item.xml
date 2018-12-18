@@ -4,20 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".StudyCornerFragment">
-
+    tools:context=".CheckOutItemFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- TODO: Update blank fragment layout -->
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/latolight"
-            android:text="Study Corner"
+            android:text="Check Out Item"
             android:textAlignment="center"
             android:textSize="60sp" />
 
@@ -25,12 +24,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/latolight"
-            android:text="Which course are you studying for?"
+            android:text="What is this item?"
             android:textAlignment="center"
             android:textSize="20sp" />
 
         <Spinner
-            android:id="@+id/studyCoursesSpinner"
+            android:id="@+id/checkOutItemSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -38,99 +37,63 @@
             android:layout_marginRight="20dp"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown" />
+
+
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/latolight"
-            android:text="Which professor assigned this?"
+            android:text="Please enter information about this item (Calculator Label, Book Title, etc.)"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_margin="20dp"/>
 
-        <Spinner
-            android:id="@+id/studyProfessorsSpinner"
+
+        <EditText
+            android:id="@+id/checkOutItemInformation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown" />
+            android:fontFamily="@font/latolight"
+            android:hint="Item Information"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/latolight"
+            android:text="Please enter the student's SLU ID number:"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:layout_margin="20dp"/>
+
+
+        <EditText
+            android:id="@+id/checkOutItemSLUID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/latolight"
+            android:hint="ID Number"
+            android:textSize="20sp" />
+
+
 
         <Button
-            android:id="@+id/findPostedAssignmentButton"
+            android:id="@+id/submitCheckOutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Find Posted Assignment"
             android:layout_gravity="center"
             android:background="@drawable/rounded_button"
-            android:textSize="20sp"
-            android:fontFamily="@font/latolight"
+            android:padding="15dp"
             android:layout_marginBottom="20dp"
-            android:padding="10dp"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/latolight"
-            android:text="Please choose your assignment from the list:"
-            android:textAlignment="center"
-            android:textSize="20sp" />
-
-        <Spinner
-            android:id="@+id/studyAssignmentsSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/latolight"
-            android:text="What time are you studying?"
-            android:textAlignment="center"
-            android:textSize="20sp" />
-
-        <TimePicker
-            android:id="@+id/timePickerStudyCorner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:timePickerMode="spinner" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/latolight"
-            android:text="What day are you studying?"
-            android:textAlignment="center"
-            android:textSize="20sp" />
-
-        <CalendarView
-            android:id="@+id/calenderStudyCorner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-        <Button
-            android:id="@+id/submitStudyCornerButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Submit"
-            android:layout_gravity="center"
-            android:background="@drawable/rounded_button"
-            android:textSize="20sp"
-            android:fontFamily="@font/latolight"
-            android:padding="10dp"
-            android:layout_marginBottom="20dp"
-            />
-
-
+            android:textSize="20sp" />
 
     </LinearLayout>
-
 </ScrollView>
