@@ -130,10 +130,6 @@ public class StudentUsageFragment extends Fragment {
         });
 
 
-
-
-
-
         return rootView;
     }
 
