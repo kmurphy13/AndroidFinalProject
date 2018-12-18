@@ -8,9 +8,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
-        <activity android:name=".MainActivity"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,24 +18,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MentorActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".StudentActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ScheduleSessionActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".StudyCornerActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".CheckInActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ProfessorActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".StudentUsageActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".PostAssignmentActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MentorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StudentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ScheduleSessionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StudyCornerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CheckInActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProfessorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StudentUsageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PostAssignmentActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".CheckInItemActivity" />
+        <activity android:name=".CheckOutItemActivity"></activity>
     </application>
 
 </manifest>

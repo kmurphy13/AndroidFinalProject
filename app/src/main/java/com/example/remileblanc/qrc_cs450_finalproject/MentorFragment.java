@@ -30,6 +30,8 @@ public class MentorFragment extends Fragment {
     private TextView mentorGreeting;
     private TextView sessionsData;
     private boolean clicked = true;
+    private Button checkInButton;
+    private Button checkOutButton;
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -58,9 +60,27 @@ public class MentorFragment extends Fragment {
         sessionsData = rootView.findViewById(R.id.sessionsData);
         viewEventButton = rootView.findViewById(R.id.viewEventButton);
         postEventButton = rootView.findViewById(R.id.postEventButton);
+        checkInButton = rootView.findViewById(R.id.checkInItemButton);
+        checkOutButton = rootView.findViewById(R.id.checkOutItemButton);
 
         getName(mAuth.getCurrentUser());
         sessionsData.setVisibility(View.INVISIBLE);
+
+        checkOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CheckOutItemActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        checkInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CheckInItemActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
         viewEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
