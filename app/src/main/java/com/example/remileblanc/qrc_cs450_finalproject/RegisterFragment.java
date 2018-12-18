@@ -24,8 +24,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
@@ -36,6 +41,7 @@ public class RegisterFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private FirebaseDatabase database;
 
     private Button registerButton;
 
@@ -49,7 +55,7 @@ public class RegisterFragment extends Fragment {
     private String firstName;
     private String lastName;
     private String userType;
-
+    ArrayList<String> emails = new ArrayList<>();
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -68,6 +74,7 @@ public class RegisterFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        database = FirebaseDatabase.getInstance();
 
     }
 
@@ -100,8 +107,18 @@ public class RegisterFragment extends Fragment {
 
                 userType = ((RegisterActivity) getActivity()).getUserType();
 
+
+                getEmails();
+                System.out.println(emails.size());
+                for(String e: emails){
+                    System.out.println(e);
+                }
+
                 if(email.equals("") || password.equals("") || firstName.equals("") || lastName.equals("") || userType == null){
-                    Toast.makeText(getContext(), "Please enter all required fields", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Please enter all required fields.", Toast.LENGTH_LONG).show();
+                }
+                else if(emails.contains(email)){
+                    Toast.makeText(getContext(), "This email is already connected to another account.", Toast.LENGTH_LONG).show();
                 }
                 else {
                     createAccount(email, password);
@@ -194,20 +211,28 @@ public class RegisterFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    public void getEmails() {
+        //emails.clear();
+        final DatabaseReference users = database.getReference("users");
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        emails.add(ds.child("email").getValue().toString());
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     public void createAccount(String aEmail, String aPassword) {
 

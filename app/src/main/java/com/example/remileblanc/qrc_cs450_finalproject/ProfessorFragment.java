@@ -79,6 +79,9 @@ public class ProfessorFragment extends Fragment{
         Button studentUsageButton = rootView.findViewById(R.id.studentUsageButton);
         Button postAssignmentButton = rootView.findViewById(R.id.postAssignmentButton);
 
+        Button viewEventButton = rootView.findViewById(R.id.viewEventButton);
+        Button postEventButton = rootView.findViewById(R.id.postEventButton);
+
         studentUsageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +98,21 @@ public class ProfessorFragment extends Fragment{
             }
         });
 
+        viewEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ViewEventActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
+        postEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PostEventActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
 
         return rootView;

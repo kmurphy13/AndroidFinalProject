@@ -113,7 +113,7 @@ public class StudentUsageFragment extends Fragment {
                         if((time.child("professor").getValue()).equals(userName)){
                             String specificDate = time.getKey().substring(0,10);
                             String specificTime = time.getKey().substring(11,16);
-                            String data ="- "+time.child("name").getValue()+" came to the QRC on "+specificDate+" at "+specificTime+" for "+time.child("course").getValue();
+                            String data ="- "+time.child("name").getValue()+" came to the QRC on "+specificDate+" at "+specificTime+" for "+time.child("course").getValue()+".";
                             studentUsageData.append(data);
                             studentUsageData.append("\n\n");
                             count ++;

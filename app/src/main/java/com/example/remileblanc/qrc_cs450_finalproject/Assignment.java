@@ -6,13 +6,14 @@ public class Assignment {
     public String title;
     public String date;
     public String additionalInformation;
+    public String course;
 
     public Assignment(){
 
     }
 
-    public Assignment(String aProfessor, String anAssignmentType, String aTitle,String aDate, String aAdditionalInformation){
-
+    public Assignment(String aCourse, String aProfessor, String anAssignmentType, String aTitle,String aDate, String aAdditionalInformation){
+        this.course = aCourse;
         this.professor = aProfessor;
         this.assignmentType = anAssignmentType;
         this.title = aTitle;
